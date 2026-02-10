@@ -20,6 +20,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         /* ========== CSS VARIABLES ========== */
         :root {
@@ -37,6 +38,7 @@
             --accent-dark: #111827;
             --accent-dark-hover: #374151;
         }
+
         [data-theme="dark"] {
             --bg-primary: #0f172a;
             --bg-secondary: #1e293b;
@@ -77,55 +79,150 @@
             position: relative;
         }
         .hamburger-btn {
-            position: absolute; left: 0; top: 40px;
-            background: transparent; border: none; cursor: pointer;
-            padding: 10px; display: flex; flex-direction: column; gap: 5px; z-index: 1001;
+            position: absolute;
+            left: 0;
+            top: 40px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            z-index: 1001;
         }
         .hamburger-btn span {
-            display: block; width: 25px; height: 3px;
-            background: var(--text-primary); border-radius: 3px; transition: all 0.3s ease;
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: var(--text-primary);
+            border-radius: 3px;
+            transition: all 0.3s ease;
         }
-        .hamburger-btn:hover span { background: var(--accent-blue); }
-        h1 { font-size: 2.5em; font-weight: 700; margin-bottom: 12px; color: var(--text-tertiary); letter-spacing: -0.02em; }
-        .date-display { font-size: 0.95em; color: var(--text-secondary); margin-bottom: 30px; font-weight: 400; }
+        .hamburger-btn:hover span {
+            background: var(--accent-blue);
+        }
+        h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-tertiary);
+            letter-spacing: -0.02em;
+        }
+        .date-display {
+            font-size: 0.95em;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
 
         /* ========== HAMBURGER MENU ========== */
         .menu-overlay {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.5); z-index: 1100; display: none; opacity: 0; transition: opacity 0.3s ease;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1100;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
-        .menu-overlay.active { display: block; opacity: 1; }
+        .menu-overlay.active {
+            display: block;
+            opacity: 1;
+        }
         .hamburger-menu {
-            position: fixed; top: 0; left: -300px; width: 280px; height: 100vh;
-            background: var(--bg-secondary); box-shadow: 2px 0 20px rgba(0,0,0,0.2);
-            z-index: 1101; transition: left 0.3s ease; overflow-y: auto;
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 280px;
+            height: 100vh;
+            background: var(--bg-secondary);
+            box-shadow: 2px 0 20px rgba(0,0,0,0.2);
+            z-index: 1101;
+            transition: left 0.3s ease;
+            overflow-y: auto;
         }
-        .hamburger-menu.active { left: 0; }
-        .menu-header { display: flex; justify-content: space-between; align-items: center; padding: 24px 20px; border-bottom: 1px solid var(--border-color); }
-        .menu-header h2 { font-size: 1.3em; font-weight: 600; color: var(--text-tertiary); margin: 0; }
+        .hamburger-menu.active {
+            left: 0;
+        }
+        .menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 20px;
+            padding-top: env(safe-area-inset-top, 48px);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .menu-header h2 {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            margin: 0;
+        }
         .menu-close {
-            background: transparent; border: none; color: var(--text-secondary); font-size: 1.8em;
-            cursor: pointer; width: 32px; height: 32px; border-radius: 6px;
-            display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.8em;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
         }
-        .menu-close:hover { background: var(--bg-tertiary); color: var(--text-primary); }
-        .menu-items { padding: 8px 0; }
+        .menu-close:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+        .menu-items {
+            padding: 8px 0;
+        }
         .menu-item {
-            width: 100%; display: flex; align-items: center; padding: 16px 20px;
-            background: transparent; border: none; color: var(--text-primary);
-            font-size: 1em; font-weight: 500; cursor: pointer; transition: all 0.2s ease; text-align: left;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1em;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
         }
-        .menu-item:hover { background: var(--bg-tertiary); }
-        .menu-divider { height: 1px; background: var(--border-color); margin: 8px 20px; }
+        .menu-item:hover {
+            background: var(--bg-tertiary);
+        }
+        .menu-divider {
+            height: 1px;
+            background: var(--border-color);
+            margin: 8px 20px;
+        }
 
         /* ========== CONTENT SECTIONS ========== */
         .content-section {
-            background: var(--bg-secondary); padding: 32px; padding-bottom: 60px;
-            margin-bottom: 24px; border-radius: 12px; box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border-color); transition: all 0.3s ease;
-            animation: fadeInUp 0.6s ease-out forwards; opacity: 0; position: relative;
+            background: var(--bg-secondary);
+            padding: 32px;
+            padding-bottom: 60px;
+            margin-bottom: 24px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+            position: relative;
         }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .content-section:nth-child(1) { animation-delay: 0.1s; }
         .content-section:nth-child(2) { animation-delay: 0.2s; }
         .content-section:nth-child(3) { animation-delay: 0.3s; }
@@ -134,96 +231,426 @@
         .content-section:nth-child(6) { animation-delay: 0.6s; }
         .content-section:nth-child(7) { animation-delay: 0.7s; }
         .content-section:nth-child(8) { animation-delay: 0.8s; }
-        .content-section:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
-        .content-section h2 { font-size: 1.25em; font-weight: 600; color: var(--text-tertiary); letter-spacing: -0.01em; margin: 0 0 16px 0; }
-        .section-actions { position: absolute; bottom: 16px; right: 16px; display: flex; gap: 8px; }
-        .favorite-btn, .share-btn {
-            background: transparent; border: 1px solid var(--border-color); color: var(--text-secondary);
-            width: 36px; height: 36px; border-radius: 6px; cursor: pointer; font-size: 1.1em;
-            display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
+
+        .content-section:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
         }
-        .favorite-btn:hover, .share-btn:hover { background: var(--bg-tertiary); transform: scale(1.1); }
-        .favorite-btn.active { background: #FCD34D; border-color: #FCD34D; color: #78350F; }
+        .content-section h2 {
+            font-size: 1.25em;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            letter-spacing: -0.01em;
+            margin: 0 0 16px 0;
+        }
+        .section-actions {
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            display: flex;
+            gap: 8px;
+        }
+        .favorite-btn, .share-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        .favorite-btn:hover, .share-btn:hover {
+            background: var(--bg-tertiary);
+            transform: scale(1.1);
+        }
+        .favorite-btn.active {
+            background: #FCD34D;
+            border-color: #FCD34D;
+            color: #78350F;
+        }
+
+        /* ========== iOS SHARE ICON ========== */
+        .share-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--text-secondary);
+            fill: none;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .share-btn:hover svg {
+            stroke: var(--accent-blue);
+        }
 
         /* ========== IMAGE PREVIEWS ========== */
-        .content-image { width: 100%; max-width: 200px; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 16px; border: 1px solid var(--border-color); display: block; }
+        .content-image {
+            width: 100%;
+            max-width: 200px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border-color);
+            display: block;
+        }
         .content-image.error { display: none; }
 
         /* ========== BUTTONS & LINKS ========== */
         .spotify-link {
-            display: inline-block; margin-top: 16px; padding: 10px 20px;
-            background: var(--accent-blue); color: white; text-decoration: none;
-            border-radius: 8px; font-size: 0.875em; transition: all 0.2s ease; font-weight: 500;
+            display: inline-block;
+            margin-top: 16px;
+            padding: 10px 20px;
+            background: var(--accent-blue);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.875em;
+            transition: all 0.2s ease;
+            font-weight: 500;
         }
-        .spotify-link:hover { background: var(--accent-blue-hover); transform: translateY(-2px) scale(1.02); box-shadow: 0 8px 16px rgba(59,130,246,0.3); }
-        .learn-more-link { display: inline-block; margin-left: 12px; color: var(--text-secondary); text-decoration: none; font-size: 0.875em; transition: all 0.2s ease; font-weight: 500; }
-        .learn-more-link:hover { color: var(--accent-blue); }
-        .button-group { margin-top: 16px; display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+        .spotify-link:hover {
+            background: var(--accent-blue-hover);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 16px rgba(59,130,246,0.3);
+        }
+        .learn-more-link {
+            display: inline-block;
+            margin-left: 12px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875em;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+        .learn-more-link:hover {
+            color: var(--accent-blue);
+        }
+        .button-group {
+            margin-top: 16px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
 
         /* ========== POEM TEXT ========== */
-        .poem-text { font-style: italic; margin: 16px 0; padding: 20px; background: var(--bg-tertiary); border-left: 3px solid var(--accent-dark); white-space: pre-line; font-size: 0.95em; line-height: 1.7; color: var(--text-secondary); border-radius: 4px; }
+        .poem-text {
+            font-style: italic;
+            margin: 16px 0;
+            padding: 20px;
+            background: var(--bg-tertiary);
+            border-left: 3px solid var(--accent-dark);
+            white-space: pre-line;
+            font-size: 0.95em;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            border-radius: 4px;
+        }
 
         /* ========== MODALS ========== */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
         .modal-overlay.active { display: flex; }
-        .modal { background: var(--bg-secondary); border-radius: 16px; max-width: 500px; width: 100%; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); animation: modalSlideIn 0.3s ease-out; }
-        @keyframes modalSlideIn { from { opacity: 0; transform: translateY(20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        .modal-header { padding: 24px 24px 16px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
-        .modal-header h3 { font-size: 1.3em; font-weight: 600; color: var(--text-tertiary); }
-        .modal-close { background: transparent; border: none; color: var(--text-secondary); font-size: 1.5em; cursor: pointer; width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
-        .modal-close:hover { background: var(--bg-tertiary); color: var(--text-primary); }
+        .modal {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .modal-header {
+            padding: 24px 24px 16px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h3 {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: var(--text-tertiary);
+        }
+        .modal-close {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5em;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        .modal-close:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
         .modal-body { padding: 24px; }
-        .share-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-        .share-option { display: flex; align-items: center; gap: 12px; padding: 16px; border: 1px solid var(--border-color); border-radius: 8px; cursor: pointer; transition: all 0.2s ease; background: var(--bg-primary); }
-        .share-option:hover { background: var(--bg-tertiary); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+        .share-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .share-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: var(--bg-primary);
+        }
+        .share-option:hover {
+            background: var(--bg-tertiary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
         .share-option span { font-size: 1.5em; }
-        .share-option div { font-size: 0.9em; font-weight: 500; color: var(--text-primary); }
+        .share-option svg { flex-shrink: 0; }
+        .share-option div {
+            font-size: 0.9em;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
         .favorites-grid { display: grid; gap: 16px; }
-        .favorite-item { padding: 16px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-primary); display: flex; justify-content: space-between; align-items: center; }
-        .favorite-info h4 { font-size: 1em; font-weight: 600; color: var(--text-tertiary); margin-bottom: 4px; }
-        .favorite-info p { font-size: 0.85em; color: var(--text-secondary); }
-        .remove-favorite { background: transparent; border: 1px solid var(--border-color); color: var(--text-secondary); padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85em; transition: all 0.2s ease; }
-        .remove-favorite:hover { background: #FEE2E2; border-color: #EF4444; color: #991B1B; }
-        .empty-state { text-align: center; padding: 40px 20px; color: var(--text-secondary); }
-        .empty-state-icon { font-size: 3em; margin-bottom: 16px; }
+        .favorite-item {
+            padding: 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .favorite-info h4 {
+            font-size: 1em;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            margin-bottom: 4px;
+        }
+        .favorite-info p {
+            font-size: 0.85em;
+            color: var(--text-secondary);
+        }
+        .remove-favorite {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.2s ease;
+        }
+        .remove-favorite:hover {
+            background: #FEE2E2;
+            border-color: #EF4444;
+            color: #991B1B;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-secondary);
+        }
+        .empty-state-icon {
+            font-size: 3em;
+            margin-bottom: 16px;
+        }
 
         /* ========== LOADING ========== */
-        .loading { text-align: center; padding: 60px 20px; }
-        .loading-spinner { width: 40px; height: 40px; border: 3px solid var(--border-color); border-top-color: var(--accent-blue); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 16px; }
-        
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--accent-blue);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 16px;
+        }
+
         /* Skeleton Loading */
-        .skeleton-card { background: var(--bg-secondary); border-radius: 12px; padding: 28px; margin-bottom: 20px; border-left: 4px solid var(--border-color); }
-        .skeleton-line { background: linear-gradient(90deg, var(--border-color) 25%, var(--bg-tertiary) 50%, var(--border-color) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 6px; }
+        .skeleton-card {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--border-color);
+        }
+        .skeleton-line {
+            background: linear-gradient(90deg, var(--border-color) 25%, var(--bg-tertiary) 50%, var(--border-color) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 6px;
+        }
         .skeleton-title { width: 40%; height: 22px; margin-bottom: 16px; }
         .skeleton-subtitle { width: 65%; height: 16px; margin-bottom: 10px; }
         .skeleton-text { width: 85%; height: 14px; margin-bottom: 8px; }
         .skeleton-text-short { width: 50%; height: 14px; margin-bottom: 8px; }
         .skeleton-img { width: 100%; max-width: 300px; height: 180px; margin: 12px 0; border-radius: 8px; }
         .skeleton-btn { width: 140px; height: 38px; border-radius: 8px; margin-top: 12px; }
-        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-        @keyframes spin { to { transform: rotate(360deg); } }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
 
         /* ========== ARCHIVE ========== */
-        .archive { display: none; background: var(--bg-secondary); padding: 32px; margin-bottom: 32px; border-radius: 12px; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); }
+        .archive {
+            display: none;
+            background: var(--bg-secondary);
+            padding: 32px;
+            margin-bottom: 32px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+        }
         .archive.active { display: block; }
-        .archive h2 { font-size: 1.5em; font-weight: 600; margin-bottom: 24px; color: var(--text-tertiary); }
-        .month-selector { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding: 16px; background: var(--bg-tertiary); border-radius: 8px; gap: 16px; }
-        .month-selector button { background: var(--accent-dark); color: white; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-size: 0.875em; flex-shrink: 0; transition: all 0.2s ease; font-weight: 500; }
-        .month-selector button:hover:not(:disabled) { background: var(--accent-dark-hover); }
-        .month-selector button:disabled { opacity: 0.5; cursor: not-allowed; }
-        .month-selector h3 { margin: 0; font-size: 1.1em; font-weight: 600; text-align: center; flex: 1; color: var(--text-tertiary); }
-        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-top: 16px; }
-        .calendar-header { text-align: center; font-weight: 600; padding: 12px 5px; color: var(--text-secondary); font-size: 0.75em; text-transform: uppercase; letter-spacing: 0.05em; }
-        .calendar-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; background: var(--bg-tertiary); border-radius: 8px; cursor: pointer; border: 2px solid transparent; font-size: 0.875em; min-height: 48px; transition: all 0.2s ease; color: var(--text-primary); font-weight: 500; }
-        .calendar-day:hover:not(.locked):not(.empty) { background: var(--border-color); transform: scale(1.05); }
-        .calendar-day.today { border-color: var(--accent-dark); background: var(--bg-secondary); font-weight: 600; }
-        .calendar-day.selected { background: var(--accent-dark); color: white; font-weight: 600; }
-        .calendar-day.locked { opacity: 0.3; cursor: not-allowed; position: relative; }
-        .calendar-day.locked::after { content: '🔒'; font-size: 0.7em; position: absolute; bottom: 2px; right: 2px; }
-        .calendar-day.empty { background: transparent; cursor: default; }
+        .archive h2 {
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--text-tertiary);
+        }
+        .month-selector {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding: 16px;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            gap: 16px;
+        }
+        .month-selector button {
+            background: var(--accent-dark);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.875em;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+        .month-selector button:hover:not(:disabled) {
+            background: var(--accent-dark-hover);
+        }
+        .month-selector button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .month-selector h3 {
+            margin: 0;
+            font-size: 1.1em;
+            font-weight: 600;
+            text-align: center;
+            flex: 1;
+            color: var(--text-tertiary);
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin-top: 16px;
+        }
+        .calendar-header {
+            text-align: center;
+            font-weight: 600;
+            padding: 12px 5px;
+            color: var(--text-secondary);
+            font-size: 0.75em;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            font-size: 0.875em;
+            min-height: 48px;
+            transition: all 0.2s ease;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        .calendar-day:hover:not(.locked):not(.empty) {
+            background: var(--border-color);
+            transform: scale(1.05);
+        }
+        .calendar-day.today {
+            border-color: var(--accent-dark);
+            background: var(--bg-secondary);
+            font-weight: 600;
+        }
+        .calendar-day.selected {
+            background: var(--accent-dark);
+            color: white;
+            font-weight: 600;
+        }
+        .calendar-day.locked {
+            opacity: 0.3;
+            cursor: not-allowed;
+            position: relative;
+        }
+        .calendar-day.locked::after {
+            content: '🔒';
+            font-size: 0.7em;
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+        }
+        .calendar-day.empty {
+            background: transparent;
+            cursor: default;
+        }
 
         /* ========== FOOTER ========== */
-        footer { text-align: center; margin-top: 60px; padding: 24px; color: var(--text-secondary); font-size: 0.875em; font-weight: 500; }
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 24px;
+            color: var(--text-secondary);
+            font-size: 0.875em;
+            font-weight: 500;
+        }
 
         /* ========== MOBILE ========== */
         @media (max-width: 768px) {
@@ -239,478 +666,690 @@
             .archive { padding: 20px; }
             .month-selector { padding: 12px; }
             .content-image { max-width: 100%; height: 180px; }
-            .share-options { grid-template-columns: 1fr; }
+            .share-options { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
 <body>
-    <header>
-        <button class="hamburger-btn" onclick="toggleMenu()">
-            <span></span><span></span><span></span>
-        </button>
-        <h1>Daily Muse</h1>
-        <div class="date-display" id="currentDate"></div>
-    </header>
 
-    <!-- Hamburger Menu -->
-    <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
-    <nav class="hamburger-menu" id="hamburgerMenu">
-        <div class="menu-header">
-            <h2>Menu</h2>
-            <button class="menu-close" onclick="closeMenu()">✕</button>
-        </div>
-        <div class="menu-items">
-            <button class="menu-item" onclick="toggleArchive(); closeMenu();"><span>Archive</span></button>
-            <button class="menu-item" onclick="showFavorites(); closeMenu();"><span>Favorites</span></button>
-            <button class="menu-item" onclick="closeMenu();"><span>Notifications</span></button>
-            <div class="menu-divider"></div>
-            <button class="menu-item" id="menuDarkModeToggle" onclick="toggleDarkMode()"><span id="menuDarkModeText">Dark Mode</span></button>
-        </div>
-    </nav>
+<header>
+    <button class="hamburger-btn" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+    </button>
+    <h1>Daily Muse</h1>
+    <div class="date-display" id="currentDate"></div>
+</header>
 
-    <div class="archive" id="archive">
-        <h2>Archive</h2>
-        <p style="color: var(--text-secondary); margin-bottom: 15px;">Select a date to view that day's selections</p>
-        <div class="month-selector">
-            <button onclick="changeMonth(-1)" id="prevMonthBtn">← Previous</button>
-            <h3 id="currentMonth"></h3>
-            <button onclick="changeMonth(1)" id="nextMonthBtn">Next →</button>
-        </div>
-        <div class="calendar-grid" id="calendarGrid"></div>
+<!-- Hamburger Menu -->
+<div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+<nav class="hamburger-menu" id="hamburgerMenu">
+    <div class="menu-header">
+        <h2>Menu</h2>
+        <button class="menu-close" onclick="closeMenu()">✕</button>
     </div>
+    <div class="menu-items">
+        <button class="menu-item" onclick="toggleArchive(); closeMenu();"><span>Archive</span></button>
+        <button class="menu-item" onclick="showFavorites(); closeMenu();"><span>Favorites</span></button>
+        <button class="menu-item" onclick="closeMenu();"><span>Notifications</span></button>
+        <div class="menu-divider"></div>
+        <button class="menu-item" id="menuDarkModeToggle" onclick="toggleDarkMode()"><span id="menuDarkModeText">Dark Mode</span></button>
+    </div>
+</nav>
 
-    <main id="mainContent"></main>
+<div class="archive" id="archive">
+    <h2>Archive</h2>
+    <p style="color: var(--text-secondary); margin-bottom: 15px;">Select a date to view that day's selections</p>
+    <div class="month-selector">
+        <button onclick="changeMonth(-1)" id="prevMonthBtn">← Previous</button>
+        <h3 id="currentMonth"></h3>
+        <button onclick="changeMonth(1)" id="nextMonthBtn">Next →</button>
+    </div>
+    <div class="calendar-grid" id="calendarGrid"></div>
+</div>
 
-    <!-- Share Modal -->
-    <div class="modal-overlay" id="shareModal">
-        <div class="modal">
-            <div class="modal-header">
-                <h3>Share</h3>
-                <button class="modal-close" onclick="closeShareModal()">×</button>
-            </div>
-            <div class="modal-body">
-                <div class="share-options">
-                    <div class="share-option" onclick="shareVia('twitter')"><span>🐦</span><div>Twitter</div></div>
-                    <div class="share-option" onclick="shareVia('facebook')"><span>📘</span><div>Facebook</div></div>
-                    <div class="share-option" onclick="shareVia('email')"><span>📧</span><div>Email</div></div>
-                    <div class="share-option" onclick="shareVia('copy')"><span>📋</span><div>Copy Link</div></div>
+<main id="mainContent"></main>
+
+<!-- Share Modal -->
+<div class="modal-overlay" id="shareModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3>Share</h3>
+            <button class="modal-close" onclick="closeShareModal()">×</button>
+        </div>
+        <div class="modal-body">
+            <div class="share-options">
+                <div class="share-option" onclick="shareVia('x')">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="var(--text-primary)"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    <div>X</div>
+                </div>
+                <div class="share-option" onclick="shareVia('facebook')">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="var(--text-primary)"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    <div>Facebook</div>
+                </div>
+                <div class="share-option" onclick="shareVia('linkedin')">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="var(--text-primary)"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    <div>LinkedIn</div>
+                </div>
+                <div class="share-option" onclick="shareVia('instagram')">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="var(--text-primary)"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                    <div>Instagram</div>
+                </div>
+                <div class="share-option" onclick="shareVia('email')">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="var(--text-primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13 2 4"/></svg>
+                    <div>Email</div>
+                </div>
+                <div class="share-option" onclick="shareVia('copy')">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="var(--text-primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+                    <div>Copy Link</div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Favorites Modal -->
-    <div class="modal-overlay" id="favoritesModal">
-        <div class="modal">
-            <div class="modal-header">
-                <h3>My Favorites</h3>
-                <button class="modal-close" onclick="closeFavoritesModal()">×</button>
-            </div>
-            <div class="modal-body">
-                <div class="favorites-grid" id="favoritesGrid"></div>
-            </div>
+<!-- Favorites Modal -->
+<div class="modal-overlay" id="favoritesModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3>My Favorites</h3>
+            <button class="modal-close" onclick="closeFavoritesModal()">×</button>
+        </div>
+        <div class="modal-body">
+            <div class="favorites-grid" id="favoritesGrid"></div>
         </div>
     </div>
+</div>
 
-    <footer><p>Your daily dose of culture</p></footer>
+<footer><p>Your daily dose of culture</p></footer>
 
-    <script>
-        // ========================================
-        // CONFIG
-        // ========================================
-        
-        // *** CHANGE THIS to your hosted content URL ***
-        const CONTENT_BASE_URL = './content';
-        const APP_START_DATE = new Date(2026, 0, 1);
-        const CACHE_PREFIX = 'dailyMuse_content_';
-        const STORAGE_KEYS = {
-            DARK_MODE: 'dailyMuse_darkMode',
-            FAVORITES: 'dailyMuse_favorites'
-        };
+<script>
+    // ========================================
+    // CONFIG
+    // ========================================
+    const CONTENT_BASE_URL = './content';
+    const APP_START_DATE = new Date(2026, 1, 1);
+    const CACHE_PREFIX = 'dailyMuse_content_';
+    const STORAGE_KEYS = {
+        DARK_MODE: 'dailyMuse_darkMode',
+        FAVORITES: 'dailyMuse_favorites'
+    };
 
-        // ========================================
-        // DATE UTILITIES
-        // ========================================
-        
-        function formatDateKey(date) {
-            const y = date.getFullYear();
-            const m = String(date.getMonth() + 1).padStart(2, '0');
-            const d = String(date.getDate()).padStart(2, '0');
-            return `${y}-${m}-${d}`;
+    // iOS Share Icon SVG
+    const IOS_SHARE_ICON = `<svg viewBox="0 0 24 24"><path d="M12 3l0 13"/><path d="M8 7l4-4 4 4"/><path d="M6 11v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-8"/></svg>`;
+
+    // Mock content for preview (removed in production)
+    const MOCK_CONTENT = {
+        "2026-02-01": {"music":{"piece":"Clair de Lune","composer":"Claude Debussy","year":1890,"spotifyQuery":"Debussy Clair de Lune","wiki":"https://en.wikipedia.org/wiki/Claude_Debussy"},"painting":{"title":"Starry Night","artist":"Vincent van Gogh","year":1889,"description":"A swirling night sky over a quiet village, painted during van Gogh's stay at the Saint-Paul-de-Mausole asylum.","url":"https://www.moma.org/collection/works/79802","wiki":"https://en.wikipedia.org/wiki/Vincent_van_Gogh","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/300px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg"},"poem":{"title":"The Road Not Taken","author":"Robert Frost","text":"Two roads diverged in a yellow wood,\nAnd sorry I could not travel both\nAnd be one traveler, long I stood\nAnd looked down one as far as I could\nTo where it bent in the undergrowth;","url":"https://www.poetryfoundation.org/poems/44272/the-road-not-taken","wiki":"https://en.wikipedia.org/wiki/Robert_Frost"},"sculpture":{"title":"David","artist":"Michelangelo","year":1504,"description":"A 17-foot marble masterpiece depicting the Biblical hero David, considered one of the greatest achievements in sculpture.","url":"https://www.galleriaaccademiafirenze.it/opere/david-michelangelo/","wiki":"https://en.wikipedia.org/wiki/Michelangelo","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/%27David%27_by_Michelangelo_Fir_JBU002.jpg/200px-%27David%27_by_Michelangelo_Fir_JBU002.jpg"},"photography":{"title":"Afghan Girl","artist":"Steve McCurry","year":1984,"description":"Sharbat Gula's piercing green eyes became one of the most famous portraits in National Geographic's history.","url":"https://www.nationalgeographic.com/magazine/article/afghan-girl-a-life-revealed","wiki":"https://en.wikipedia.org/wiki/Steve_McCurry","image":"https://upload.wikimedia.org/wikipedia/en/b/b4/Sharbat_Gula.jpg"},"architecture":{"name":"Fallingwater","architect":"Frank Lloyd Wright","year":1939,"location":"Mill Run, Pennsylvania","description":"A house built over a waterfall, seamlessly integrating architecture with nature. Wright's masterpiece and a UNESCO World Heritage Site.","url":"https://fallingwater.org/","wiki":"https://en.wikipedia.org/wiki/Frank_Lloyd_Wright","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Fallingwater3.jpg/300px-Fallingwater3.jpg"},"astronomy":{"title":"Pillars of Creation","description":"Towering columns of interstellar gas and dust in the Eagle Nebula where new stars are being born.","credit":"NASA, ESA, and the Hubble Heritage Team","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Pillars_of_creation_2014_HST_WFC3-UVIS_full-res_denoised.jpg/300px-Pillars_of_creation_2014_HST_WFC3-UVIS_full-res_denoised.jpg"},"quote":{"text":"Every artist was first an amateur.","author":"Ralph Waldo Emerson"}},
+        "2026-02-02": {"music":{"piece":"The Four Seasons - Winter","composer":"Antonio Vivaldi","year":1725,"spotifyQuery":"Vivaldi Four Seasons Winter","wiki":"https://en.wikipedia.org/wiki/Antonio_Vivaldi"},"painting":{"title":"Girl with a Pearl Earring","artist":"Johannes Vermeer","year":1665,"description":"Often called the 'Mona Lisa of the North,' this intimate portrait captivates with its luminous pearl and enigmatic gaze.","url":"https://www.mauritshuis.nl/en/our-collection/artworks/670-girl-with-a-pearl-earring/","wiki":"https://en.wikipedia.org/wiki/Johannes_Vermeer","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/1665_Girl_with_a_Pearl_Earring.jpg/220px-1665_Girl_with_a_Pearl_Earring.jpg"},"poem":{"title":"Still I Rise","author":"Maya Angelou","text":"You may write me down in history\nWith your bitter, twisted lies,\nYou may trod me in the very dirt\nBut still, like dust, I'll rise.","url":"https://www.poetryfoundation.org/poems/46446/still-i-rise","wiki":"https://en.wikipedia.org/wiki/Maya_Angelou"},"sculpture":{"title":"The Thinker","artist":"Auguste Rodin","year":1904,"description":"Originally conceived as part of The Gates of Hell, this iconic bronze figure has become a universal symbol of philosophical contemplation.","url":"https://www.musee-rodin.fr/en/museum/collection/thinker","wiki":"https://en.wikipedia.org/wiki/Auguste_Rodin","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Mus%C3%A9e_Rodin_1.jpg/220px-Mus%C3%A9e_Rodin_1.jpg"},"photography":{"title":"Earthrise","artist":"William Anders","year":1968,"description":"Taken during the Apollo 8 mission, this photograph of Earth rising over the lunar horizon transformed humanity's view of our planet.","url":"https://www.nasa.gov/image-article/apollo-8-earthrise/","wiki":"https://en.wikipedia.org/wiki/William_Anders","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/NASA-Apollo8-Dec24-Earthrise.jpg/300px-NASA-Apollo8-Dec24-Earthrise.jpg"},"architecture":{"name":"Sydney Opera House","architect":"Jørn Utzon","year":1973,"location":"Sydney, Australia","description":"Its sculptural sail-shaped roof shells make it one of the most distinctive buildings of the 20th century.","url":"https://www.sydneyoperahouse.com/","wiki":"https://en.wikipedia.org/wiki/J%C3%B8rn_Utzon","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Sydney_Australia._%2821339175489%29.jpg/300px-Sydney_Australia._%2821339175489%29.jpg"},"astronomy":{"title":"The Pale Blue Dot","description":"Earth seen from 3.7 billion miles away by Voyager 1. Carl Sagan reflected on this tiny point as everything we've ever known.","credit":"NASA/JPL-Caltech","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/PaleBlueDot.jpg/220px-PaleBlueDot.jpg"},"quote":{"text":"Art is not what you see, but what you make others see.","author":"Edgar Degas"}},
+        "2026-02-03": {"music":{"piece":"Gymnopédie No. 1","composer":"Erik Satie","year":1888,"spotifyQuery":"Satie Gymnopedie No 1","wiki":"https://en.wikipedia.org/wiki/Erik_Satie"},"painting":{"title":"The Great Wave off Kanagawa","artist":"Katsushika Hokusai","year":1831,"description":"A towering wave threatens boats near Kanagawa while Mount Fuji sits calmly in the background.","url":"https://www.metmuseum.org/art/collection/search/45434","wiki":"https://en.wikipedia.org/wiki/Katsushika_Hokusai","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Tsunami_by_hokusai_19th_century.jpg/300px-Tsunami_by_hokusai_19th_century.jpg"},"poem":{"title":"Invictus","author":"William Ernest Henley","text":"Out of the night that covers me,\nBlack as the pit from pole to pole,\nI thank whatever gods may be\nFor my unconquerable soul.","url":"https://www.poetryfoundation.org/poems/51642/invictus","wiki":"https://en.wikipedia.org/wiki/William_Ernest_Henley"},"sculpture":{"title":"Venus de Milo","artist":"Alexandros of Antioch","year":-100,"description":"This ancient Greek statue of Aphrodite, discovered on Milos in 1820, is celebrated for its graceful beauty despite its missing arms.","url":"https://www.louvre.fr/en/explore/the-palace/the-venus-de-milo","wiki":"https://en.wikipedia.org/wiki/Venus_de_Milo","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Front_views_of_the_Venus_de_Milo.jpg/200px-Front_views_of_the_Venus_de_Milo.jpg"},"photography":{"title":"V-J Day in Times Square","artist":"Alfred Eisenstaedt","year":1945,"description":"A sailor kissing a nurse in Times Square on Victory over Japan Day — one of the most iconic photographs of the 20th century.","url":"https://www.life.com/history/v-j-day-kiss-times-square/","wiki":"https://en.wikipedia.org/wiki/Alfred_Eisenstaedt","image":"https://upload.wikimedia.org/wikipedia/en/thumb/9/95/Legendary_kiss_V%E2%80%93J_day_in_Times_Square.jpg/220px-Legendary_kiss_V%E2%80%93J_day_in_Times_Square.jpg"},"architecture":{"name":"Sagrada Família","architect":"Antoni Gaudí","year":1882,"location":"Barcelona, Spain","description":"Gaudí's unfinished masterpiece blends Gothic and Art Nouveau forms, still under construction after over 140 years.","url":"https://sagradafamilia.org/en/","wiki":"https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Sagrada_Familia_nave_roof_detail.jpg/300px-Sagrada_Familia_nave_roof_detail.jpg"},"astronomy":{"title":"Hubble Deep Field","description":"Pointed at a seemingly empty patch of sky for 10 days, Hubble revealed over 3,000 galaxies — some over 12 billion years old.","credit":"NASA, Robert Williams, and the Hubble Deep Field Team","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/HubbleDeepField.800px.jpg/300px-HubbleDeepField.800px.jpg"},"quote":{"text":"Creativity takes courage.","author":"Henri Matisse"}},
+        "2026-02-04": {"music":{"piece":"Adagio for Strings","composer":"Samuel Barber","year":1936,"spotifyQuery":"Barber Adagio for Strings","wiki":"https://en.wikipedia.org/wiki/Samuel_Barber"},"painting":{"title":"Water Lilies","artist":"Claude Monet","year":1906,"description":"Part of Monet's monumental series of approximately 250 paintings depicting his flower garden at Giverny.","url":"https://www.musee-orangerie.fr/en/collection/water-lilies","wiki":"https://en.wikipedia.org/wiki/Claude_Monet","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Claude_Monet_-_Water_Lilies_-_1906%2C_Ryerson.jpg/300px-Claude_Monet_-_Water_Lilies_-_1906%2C_Ryerson.jpg"},"poem":{"title":"Ozymandias","author":"Percy Bysshe Shelley","text":"I met a traveller from an antique land,\nWho said — Two vast and trunkless legs of stone\nStand in the desert. Near them, on the sand,\nHalf sunk a shattered visage lies.","url":"https://www.poetryfoundation.org/poems/46565/ozymandias","wiki":"https://en.wikipedia.org/wiki/Percy_Bysshe_Shelley"},"sculpture":{"title":"Winged Victory of Samothrace","artist":"Unknown","year":-190,"description":"This Hellenistic masterpiece depicts Nike alighting on the prow of a ship. Its dramatic movement makes it one of the Louvre's greatest treasures.","url":"https://www.louvre.fr/en/explore/the-palace/winged-victory-of-samothrace","wiki":"https://en.wikipedia.org/wiki/Winged_Victory_of_Samothrace","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Winged_Victory_of_Samothrace_side.jpg/200px-Winged_Victory_of_Samothrace_side.jpg"},"photography":{"title":"Moonrise, Hernandez, New Mexico","artist":"Ansel Adams","year":1941,"description":"A luminous moon rises over a small village with snow-capped mountains, demonstrating Adams' mastery of the American landscape.","url":"https://www.moma.org/collection/works/55981","wiki":"https://en.wikipedia.org/wiki/Ansel_Adams","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Adams_The_Tetons_and_the_Snake_River.jpg/300px-Adams_The_Tetons_and_the_Snake_River.jpg"},"architecture":{"name":"Taj Mahal","architect":"Ustad Ahmad Lahori","year":1653,"location":"Agra, India","description":"A white marble mausoleum built by Mughal emperor Shah Jahan. Widely considered the finest example of Mughal architecture.","url":"https://www.tajmahal.gov.in/","wiki":"https://en.wikipedia.org/wiki/Ustad_Ahmad_Lahori","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Taj_Mahal%2C_Agra%2C_India_edit3.jpg/300px-Taj_Mahal%2C_Agra%2C_India_edit3.jpg"},"astronomy":{"title":"Crab Nebula","description":"The remnant of a supernova recorded by Chinese astronomers in 1054 AD. At its heart lies a neutron star pulsing 30 times per second.","credit":"NASA, ESA, J. Hester and A. Loll","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Crab_Nebula.jpg/300px-Crab_Nebula.jpg"},"quote":{"text":"The purpose of art is washing the dust of daily life off our souls.","author":"Pablo Picasso"}},
+        "2026-02-05": {"music":{"piece":"Moonlight Sonata","composer":"Ludwig van Beethoven","year":1801,"spotifyQuery":"Beethoven Moonlight Sonata","wiki":"https://en.wikipedia.org/wiki/Ludwig_van_Beethoven"},"painting":{"title":"The Persistence of Memory","artist":"Salvador Dalí","year":1931,"description":"Soft, melting watches drape across a dreamlike landscape — a defining image of the Surrealist movement.","url":"https://www.moma.org/collection/works/79018","wiki":"https://en.wikipedia.org/wiki/Salvador_Dal%C3%AD","image":"https://upload.wikimedia.org/wikipedia/en/thumb/d/dd/The_Persistence_of_Memory.jpg/300px-The_Persistence_of_Memory.jpg"},"poem":{"title":"Do Not Go Gentle into That Good Night","author":"Dylan Thomas","text":"Do not go gentle into that good night,\nOld age should burn and rave at close of day;\nRage, rage against the dying of the light.","url":"https://www.poetryfoundation.org/poems/46569/do-not-go-gentle-into-that-good-night","wiki":"https://en.wikipedia.org/wiki/Dylan_Thomas"},"sculpture":{"title":"Bird in Space","artist":"Constantin Brâncuși","year":1923,"description":"A sleek bronze form capturing the essence of flight. Its radical abstraction once caused U.S. customs to classify it as hardware.","url":"https://www.moma.org/collection/works/81135","wiki":"https://en.wikipedia.org/wiki/Constantin_Br%C3%A2ncu%C8%99i","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Brancusi-bird.jpg/150px-Brancusi-bird.jpg"},"photography":{"title":"Lunch Atop a Skyscraper","artist":"Charles C. Ebbets","year":1932,"description":"Eleven ironworkers casually eating lunch on a steel beam 840 feet above Manhattan.","url":"https://www.rockefellercenter.com/","wiki":"https://en.wikipedia.org/wiki/Lunch_atop_a_Skyscraper","image":"https://upload.wikimedia.org/wikipedia/en/thumb/4/4c/Lunch_atop_a_Skyscraper_-_Charles_Clyde_Ebbets.jpg/300px-Lunch_atop_a_Skyscraper_-_Charles_Clyde_Ebbets.jpg"},"architecture":{"name":"Guggenheim Museum Bilbao","architect":"Frank Gehry","year":1997,"location":"Bilbao, Spain","description":"Clad in shimmering titanium panels, Gehry's deconstructivist masterpiece revitalized an entire city.","url":"https://www.guggenheim-bilbao.eus/en","wiki":"https://en.wikipedia.org/wiki/Frank_Gehry","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Guggenheim-bilbao-jan05.jpg/300px-Guggenheim-bilbao-jan05.jpg"},"astronomy":{"title":"Saturn's Rings","description":"Cassini captured Saturn's intricate ring system in stunning detail during its 13-year mission.","credit":"NASA/JPL-Caltech","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Saturn_during_Equinox.jpg/300px-Saturn_during_Equinox.jpg"},"quote":{"text":"To practice any art, no matter how well or badly, is a way to make your soul grow.","author":"Kurt Vonnegut"}},
+        "2026-02-06": {"music":{"piece":"Boléro","composer":"Maurice Ravel","year":1928,"spotifyQuery":"Ravel Bolero","wiki":"https://en.wikipedia.org/wiki/Maurice_Ravel"},"painting":{"title":"Nighthawks","artist":"Edward Hopper","year":1942,"description":"Four figures in a brightly lit diner at night — Hopper's most famous work captures urban isolation with cinematic precision.","url":"https://www.artic.edu/artworks/111628/nighthawks","wiki":"https://en.wikipedia.org/wiki/Edward_Hopper","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Nighthawks_by_Edward_Hopper_1942.jpg/300px-Nighthawks_by_Edward_Hopper_1942.jpg"},"poem":{"title":"Stopping by Woods on a Snowy Evening","author":"Robert Frost","text":"Whose woods these are I think I know.\nHis house is in the village though;\nHe will not see me stopping here\nTo watch his woods fill up with snow.","url":"https://www.poetryfoundation.org/poems/42891/stopping-by-woods-on-a-snowy-evening","wiki":"https://en.wikipedia.org/wiki/Robert_Frost"},"sculpture":{"title":"Balloon Dog (Blue)","artist":"Jeff Koons","year":1994,"description":"A monumental mirror-polished stainless steel sculpture that transforms a simple balloon animal into high art.","url":"https://broadmuseum.msu.edu/","wiki":"https://en.wikipedia.org/wiki/Jeff_Koons","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Koons_Balloon_Dog_%28Blue%29.jpg/300px-Koons_Balloon_Dog_%28Blue%29.jpg"},"photography":{"title":"Napalm Girl","artist":"Nick Ut","year":1972,"description":"Nine-year-old Phan Thi Kim Phúc running from a napalm attack — this Pulitzer Prize-winning photo helped turn opinion against the Vietnam War.","url":"https://www.apimages.com/","wiki":"https://en.wikipedia.org/wiki/Nick_Ut","image":"https://upload.wikimedia.org/wikipedia/en/thumb/d/d4/TrangBang.jpg/300px-TrangBang.jpg"},"architecture":{"name":"The Pantheon","architect":"Apollodorus of Damascus","year":125,"location":"Rome, Italy","description":"Nearly 2,000 years old, its unreinforced concrete dome remains the largest in the world.","url":"https://www.pantheonroma.com/en/","wiki":"https://en.wikipedia.org/wiki/Pantheon,_Rome","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Rome-Pantheon-Interieur1.jpg/300px-Rome-Pantheon-Interieur1.jpg"},"astronomy":{"title":"The Andromeda Galaxy","description":"Our nearest large galactic neighbor at 2.5 million light-years, containing roughly one trillion stars.","credit":"NASA/JPL-Caltech","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Andromeda_Galaxy_%28with_h-alpha%29.jpg/300px-Andromeda_Galaxy_%28with_h-alpha%29.jpg"},"quote":{"text":"Life beats down and crushes the soul and art reminds you that you have one.","author":"Stella Adler"}},
+        "2026-02-07": {"music":{"piece":"Canon in D","composer":"Johann Pachelbel","year":1680,"spotifyQuery":"Pachelbel Canon in D","wiki":"https://en.wikipedia.org/wiki/Johann_Pachelbel"},"painting":{"title":"The Birth of Venus","artist":"Sandro Botticelli","year":1485,"description":"The goddess Venus emerges from the sea as a fully grown woman — a celebration of beauty and the Italian Renaissance.","url":"https://www.uffizi.it/en/artworks/birth-of-venus","wiki":"https://en.wikipedia.org/wiki/Sandro_Botticelli","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg/300px-Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg"},"poem":{"title":"If—","author":"Rudyard Kipling","text":"If you can keep your head when all about you\nAre losing theirs and blaming it on you,\nIf you can trust yourself when all men doubt you,\nBut make allowance for their doubting too;","url":"https://www.poetryfoundation.org/poems/46473/if---","wiki":"https://en.wikipedia.org/wiki/Rudyard_Kipling"},"sculpture":{"title":"Pietà","artist":"Michelangelo","year":1499,"description":"Mary cradles the body of Jesus. Carved from a single block of Carrara marble when Michelangelo was just 24.","url":"https://www.vatican.va/various/basiliche/san_pietro/index_en.htm","wiki":"https://en.wikipedia.org/wiki/Michelangelo","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Michelangelo%27s_Pieta_5450_cut_out_black.jpg/220px-Michelangelo%27s_Pieta_5450_cut_out_black.jpg"},"photography":{"title":"Tank Man","artist":"Jeff Widener","year":1989,"description":"A lone man stands before a column of tanks near Tiananmen Square — an enduring symbol of individual courage.","url":"https://www.apimages.com/","wiki":"https://en.wikipedia.org/wiki/Jeff_Widener","image":"https://upload.wikimedia.org/wikipedia/en/thumb/d/d8/Tianasquare.jpg/300px-Tianasquare.jpg"},"architecture":{"name":"Casa Batlló","architect":"Antoni Gaudí","year":1906,"location":"Barcelona, Spain","description":"A building where nothing is straight — skeletal balconies, dragon-scale roof, and flowing stone facade.","url":"https://www.casabatllo.es/en/","wiki":"https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Casa_Batllo_Overview_Barcelona_Spain_cut.jpg/220px-Casa_Batllo_Overview_Barcelona_Spain_cut.jpg"},"astronomy":{"title":"Sombrero Galaxy","description":"A stunning spiral galaxy with a bright white core surrounded by a dramatic dust lane, 31 million light-years away.","credit":"NASA/ESA and The Hubble Heritage Team","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/M104_ngc4594_sombrero_galaxy_hi-res.jpg/300px-M104_ngc4594_sombrero_galaxy_hi-res.jpg"},"quote":{"text":"I dream my painting and I paint my dream.","author":"Vincent van Gogh"}},
+        "2026-02-08": {"music":{"piece":"Ride of the Valkyries","composer":"Richard Wagner","year":1870,"spotifyQuery":"Wagner Ride of the Valkyries","wiki":"https://en.wikipedia.org/wiki/Richard_Wagner"},"painting":{"title":"A Sunday on La Grande Jatte","artist":"Georges Seurat","year":1886,"description":"Composed of millions of tiny dots of color, Seurat's pointillist masterpiece depicts Parisians relaxing by the Seine.","url":"https://www.artic.edu/artworks/27992/a-sunday-on-la-grande-jatte-1884","wiki":"https://en.wikipedia.org/wiki/Georges_Seurat","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/A_Sunday_on_La_Grande_Jatte%2C_Georges_Seurat%2C_1884.jpg/300px-A_Sunday_on_La_Grande_Jatte%2C_Georges_Seurat%2C_1884.jpg"},"poem":{"title":"I Wandered Lonely as a Cloud","author":"William Wordsworth","text":"I wandered lonely as a cloud\nThat floats on high o'er vales and hills,\nWhen all at once I saw a crowd,\nA host, of golden daffodils.","url":"https://www.poetryfoundation.org/poems/45521/i-wandered-lonely-as-a-cloud","wiki":"https://en.wikipedia.org/wiki/William_Wordsworth"},"sculpture":{"title":"The Kiss","artist":"Auguste Rodin","year":1882,"description":"Two lovers locked in an eternal embrace, carved from a single block of marble.","url":"https://www.musee-rodin.fr/en/museum/collection/kiss","wiki":"https://en.wikipedia.org/wiki/Auguste_Rodin","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Rodin_-_The_Kiss_-_2630961332.jpg/220px-Rodin_-_The_Kiss_-_2630961332.jpg"},"photography":{"title":"Raising the Flag on Iwo Jima","artist":"Joe Rosenthal","year":1945,"description":"Six Marines raise the American flag on Mount Suribachi. One of the most reproduced photographs in history.","url":"https://www.archives.gov/","wiki":"https://en.wikipedia.org/wiki/Joe_Rosenthal","image":"https://upload.wikimedia.org/wikipedia/en/thumb/a/a1/WW2_Iwo_Jima_flag_raising.jpg/250px-WW2_Iwo_Jima_flag_raising.jpg"},"architecture":{"name":"Farnsworth House","architect":"Ludwig Mies van der Rohe","year":1951,"location":"Plano, Illinois","description":"A glass and steel pavilion — the purest expression of 'less is more' philosophy.","url":"https://farnsworthhouse.org/","wiki":"https://en.wikipedia.org/wiki/Ludwig_Mies_van_der_Rohe","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Farnsworth_House_by_Mies_Van_Der_Rohe_-_exterior-8.jpg/300px-Farnsworth_House_by_Mies_Van_Der_Rohe_-_exterior-8.jpg"},"astronomy":{"title":"Orion Nebula","description":"Visible to the naked eye in Orion's sword, this stellar nursery is 1,344 light-years away.","credit":"NASA, ESA, M. Robberto","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Orion_Nebula_-_Hubble_2006_mosaic_18000.jpg/300px-Orion_Nebula_-_Hubble_2006_mosaic_18000.jpg"},"quote":{"text":"Art enables us to find ourselves and lose ourselves at the same time.","author":"Thomas Merton"}},
+        "2026-02-09": {"music":{"piece":"Nocturne in E-flat major, Op. 9 No. 2","composer":"Frédéric Chopin","year":1832,"spotifyQuery":"Chopin Nocturne Op 9 No 2","wiki":"https://en.wikipedia.org/wiki/Fr%C3%A9d%C3%A9ric_Chopin"},"painting":{"title":"The Scream","artist":"Edvard Munch","year":1893,"description":"A figure on a bridge clutches its face in anguish under a blood-red sky — an icon of modern anxiety.","url":"https://www.nasjonalmuseet.no/en/collection/object/NG.M.00939","wiki":"https://en.wikipedia.org/wiki/Edvard_Munch","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Edvard_Munch%2C_1893%2C_The_Scream%2C_oil%2C_tempera_and_pastel_on_cardboard%2C_91_x_73_cm%2C_National_Gallery_of_Norway.jpg/220px-Edvard_Munch%2C_1893%2C_The_Scream%2C_oil%2C_tempera_and_pastel_on_cardboard%2C_91_x_73_cm%2C_National_Gallery_of_Norway.jpg"},"poem":{"title":"Phenomenal Woman","author":"Maya Angelou","text":"Pretty women wonder where my secret lies.\nI'm not cute or built to suit a fashion model's size\nBut when I start to tell them,\nThey think I'm telling lies.","url":"https://www.poetryfoundation.org/poems/48985/phenomenal-woman","wiki":"https://en.wikipedia.org/wiki/Maya_Angelou"},"sculpture":{"title":"Cloud Gate","artist":"Anish Kapoor","year":2006,"description":"Affectionately known as 'The Bean,' this 110-ton polished steel sculpture reflects and distorts the Chicago skyline.","url":"https://millenniumpark.org/","wiki":"https://en.wikipedia.org/wiki/Anish_Kapoor","image":"https://upload.wikimedia.org/wikipedia/en/thumb/c/c1/Cloud_Gate_%28The_Bean%29_from_east%27.jpg/300px-Cloud_Gate_%28The_Bean%29_from_east%27.jpg"},"photography":{"title":"Bliss","artist":"Charles O'Rear","year":1996,"description":"Rolling green hills under a blue sky. Became the most viewed photograph in history as the Windows XP wallpaper.","url":"https://www.nationalgeographic.com/","wiki":"https://en.wikipedia.org/wiki/Charles_O%27Rear","image":"https://upload.wikimedia.org/wikipedia/en/thumb/2/27/Bliss_%28Windows_XP%29.png/300px-Bliss_%28Windows_XP%29.png"},"architecture":{"name":"Lotus Temple","architect":"Fariborz Sahba","year":1986,"location":"New Delhi, India","description":"Shaped like a half-open lotus flower with 27 marble-clad petals, welcoming people of all faiths.","url":"https://www.bahaihouseofworship.in/","wiki":"https://en.wikipedia.org/wiki/Fariborz_Sahba","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/LotusDelhi.jpg/300px-LotusDelhi.jpg"},"astronomy":{"title":"Milky Way over Yellowstone","description":"Our home galaxy arcs above Grand Prismatic Spring, creating a spectacular union of terrestrial and celestial beauty.","credit":"Dave Lane","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/ESO-VLT-Laser-phot-33a-07.jpg/300px-ESO-VLT-Laser-phot-33a-07.jpg"},"quote":{"text":"The Earth has music for those who listen.","author":"William Shakespeare"}},
+        "2026-02-10": {"music":{"piece":"November Steps","composer":"Tōru Takemitsu","year":1967,"spotifyQuery":"Takemitsu November Steps","wiki":"https://en.wikipedia.org/wiki/T%C5%8Dru_Takemitsu"},"painting":{"title":"The Dance Class","artist":"Edgar Degas","year":1874,"description":"A masterful glimpse into a Parisian ballet studio capturing young dancers in rehearsal.","url":"https://www.metmuseum.org/art/collection/search/438817","wiki":"https://en.wikipedia.org/wiki/Edgar_Degas","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Edgar_Degas_-_The_Ballet_Class_-_Google_Art_Project.jpg/300px-Edgar_Degas_-_The_Ballet_Class_-_Google_Art_Project.jpg"},"poem":{"title":"The Guest House","author":"Rumi","text":"This being human is a guest house.\nEvery morning a new arrival.\nA joy, a depression, a meanness,\nsome momentary awareness comes\nas an unexpected visitor.","url":"https://www.poetryfoundation.org/poems/46652/the-guest-house","wiki":"https://en.wikipedia.org/wiki/Rumi"},"sculpture":{"title":"The Burghers of Calais","artist":"Auguste Rodin","year":1889,"description":"A monumental bronze commemorating six citizens who offered their lives to save their city.","url":"https://www.musee-rodin.fr/en/museum/collection/burghers-calais","wiki":"https://en.wikipedia.org/wiki/Auguste_Rodin","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Calais_burghers.jpg/300px-Calais_burghers.jpg"},"photography":{"title":"Migrant Mother","artist":"Dorothea Lange","year":1936,"description":"An iconic Depression-era photograph that became a symbol of resilience and dignity amid poverty.","url":"https://www.loc.gov/pictures/item/2017762891/","wiki":"https://en.wikipedia.org/wiki/Dorothea_Lange","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Lange-MigrantMother02.jpg/250px-Lange-MigrantMother02.jpg"},"architecture":{"name":"Gando School Library","architect":"Francis Kéré","year":2008,"location":"Gando, Burkina Faso","description":"A groundbreaking library using local materials and innovative climate control.","url":"https://www.archdaily.com/648024/school-library-gando-kere-architecture","wiki":"https://en.wikipedia.org/wiki/Francis_K%C3%A9r%C3%A9","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Gando_school_library.jpg/300px-Gando_school_library.jpg"},"astronomy":{"title":"Aurora over Norway","description":"On the third night of returning to the same peaks, the sky lit up with a spectacular auroral display.","credit":"Max Rive","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Aurora_near_Abisko%2C_Sweden.jpg/300px-Aurora_near_Abisko%2C_Sweden.jpg"},"quote":{"text":"The creative adult is the child who survived.","author":"Ursula K. Le Guin"}}
+    };
+
+    // ========================================
+    // DAILY REFLECTION — Curated Quote Pool
+    // ========================================
+    const REFLECTION_QUOTES = [
+        { text: "The unexamined life is not worth living.", author: "Socrates" },
+        { text: "What stands in the way becomes the way.", author: "Marcus Aurelius" },
+        { text: "He who has a why to live can bear almost any how.", author: "Friedrich Nietzsche" },
+        { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+        { text: "It is not the strongest of the species that survives, nor the most intelligent, but the one most responsive to change.", author: "Charles Darwin" },
+        { text: "Do not pray for easy lives. Pray to be stronger men.", author: "John F. Kennedy" },
+        { text: "A man who dares to waste one hour of time has not discovered the value of life.", author: "Charles Darwin" },
+        { text: "The mind is everything. What you think you become.", author: "Buddha" },
+        { text: "Knowing yourself is the beginning of all wisdom.", author: "Aristotle" },
+        { text: "The best time to plant a tree was 20 years ago. The second best time is now.", author: "Chinese Proverb" },
+        { text: "Waste no more time arguing about what a good man should be. Be one.", author: "Marcus Aurelius" },
+        { text: "It does not matter how slowly you go as long as you do not stop.", author: "Confucius" },
+        { text: "The impediment to action advances action. What stands in the way becomes the way.", author: "Marcus Aurelius" },
+        { text: "I am not what happened to me. I am what I choose to become.", author: "Carl Jung" },
+        { text: "The world breaks everyone, and afterward, many are strong at the broken places.", author: "Ernest Hemingway" },
+        { text: "In the middle of difficulty lies opportunity.", author: "Albert Einstein" },
+        { text: "We suffer more often in imagination than in reality.", author: "Seneca" },
+        { text: "Man cannot remake himself without suffering, for he is both the marble and the sculptor.", author: "Alexis Carrel" },
+        { text: "Be not afraid of growing slowly, be afraid only of standing still.", author: "Chinese Proverb" },
+        { text: "The only person you are destined to become is the person you decide to be.", author: "Ralph Waldo Emerson" },
+        { text: "What we achieve inwardly will change outer reality.", author: "Plutarch" },
+        { text: "Absorb what is useful, discard what is useless, and add what is specifically your own.", author: "Bruce Lee" },
+        { text: "The measure of a man is what he does with power.", author: "Plato" },
+        { text: "Live as if you were to die tomorrow. Learn as if you were to live forever.", author: "Mahatma Gandhi" },
+        { text: "Between stimulus and response there is a space. In that space is our power to choose our response.", author: "Viktor Frankl" },
+        { text: "It is not the critic who counts; not the man who points out how the strong man stumbles. The credit belongs to the man who is actually in the arena.", author: "Theodore Roosevelt" },
+        { text: "The happiness of your life depends upon the quality of your thoughts.", author: "Marcus Aurelius" },
+        { text: "He who conquers himself is the mightiest warrior.", author: "Confucius" },
+        { text: "The soul becomes dyed with the color of its thoughts.", author: "Marcus Aurelius" },
+        { text: "Not all those who wander are lost.", author: "J.R.R. Tolkien" },
+        { text: "We are what we repeatedly do. Excellence, then, is not an act, but a habit.", author: "Will Durant" },
+        { text: "The secret of getting ahead is getting started.", author: "Mark Twain" },
+        { text: "Education is the kindling of a flame, not the filling of a vessel.", author: "Socrates" },
+        { text: "When you reach the end of your rope, tie a knot in it and hang on.", author: "Abraham Lincoln" },
+        { text: "A gem cannot be polished without friction, nor a man perfected without trials.", author: "Seneca" },
+        { text: "The mind that opens to a new idea never returns to its original size.", author: "Albert Einstein" },
+        { text: "Difficulties strengthen the mind, as labor does the body.", author: "Seneca" },
+        { text: "No man is free who is not master of himself.", author: "Epictetus" },
+        { text: "The greatest glory in living lies not in never falling, but in rising every time we fall.", author: "Nelson Mandela" },
+        { text: "If you want to go fast, go alone. If you want to go far, go together.", author: "African Proverb" },
+        { text: "The cave you fear to enter holds the treasure you seek.", author: "Joseph Campbell" },
+        { text: "Somewhere, something incredible is waiting to be known.", author: "Carl Sagan" },
+        { text: "Not everything that is faced can be changed, but nothing can be changed until it is faced.", author: "James Baldwin" },
+        { text: "The best way out is always through.", author: "Robert Frost" },
+        { text: "He who learns but does not think is lost. He who thinks but does not learn is in great danger.", author: "Confucius" },
+        { text: "What lies behind us and what lies before us are tiny matters compared to what lies within us.", author: "Ralph Waldo Emerson" },
+        { text: "The more I read, the more I acquire, the more certain I am that I know nothing.", author: "Voltaire" },
+        { text: "You have power over your mind — not outside events. Realize this, and you will find strength.", author: "Marcus Aurelius" },
+        { text: "The wound is the place where the Light enters you.", author: "Rumi" },
+        { text: "Knowing is not enough, we must apply. Willing is not enough, we must do.", author: "Bruce Lee" },
+        { text: "To improve is to change; to be perfect is to change often.", author: "Winston Churchill" },
+        { text: "The man who moves a mountain begins by carrying away small stones.", author: "Confucius" },
+        { text: "Do what you can, with what you have, where you are.", author: "Theodore Roosevelt" },
+        { text: "An investment in knowledge pays the best interest.", author: "Benjamin Franklin" },
+        { text: "Turn your wounds into wisdom.", author: "Oprah Winfrey" },
+        { text: "The only limit to our realization of tomorrow will be our doubts of today.", author: "Franklin D. Roosevelt" },
+        { text: "Smooth seas do not make skillful sailors.", author: "African Proverb" },
+        { text: "What you get by achieving your goals is not as important as what you become by achieving your goals.", author: "Zig Ziglar" },
+        { text: "First say to yourself what you would be; and then do what you have to do.", author: "Epictetus" },
+        { text: "The beginning of wisdom is the definition of terms.", author: "Socrates" },
+        { text: "When we are no longer able to change a situation, we are challenged to change ourselves.", author: "Viktor Frankl" },
+        { text: "A reader lives a thousand lives before he dies. The man who never reads lives only one.", author: "George R.R. Martin" },
+        { text: "The successful warrior is the average man, with laser-like focus.", author: "Bruce Lee" },
+        { text: "Every morning we are born again. What we do today is what matters most.", author: "Buddha" },
+        { text: "The only true wisdom is in knowing you know nothing.", author: "Socrates" },
+        { text: "Dwell on the beauty of life. Watch the stars, and see yourself running with them.", author: "Marcus Aurelius" },
+        { text: "If there is no struggle, there is no progress.", author: "Frederick Douglass" },
+        { text: "One can choose to go back toward safety or forward toward growth.", author: "Abraham Maslow" },
+        { text: "The noblest pleasure is the joy of understanding.", author: "Leonardo da Vinci" },
+        { text: "Be patient with yourself. Self-growth is tender; it's holy ground.", author: "Stephen Covey" },
+        { text: "Out of your vulnerabilities will come your strength.", author: "Sigmund Freud" },
+        { text: "The mind is not a vessel to be filled, but a fire to be kindled.", author: "Plutarch" },
+        { text: "We must be willing to let go of the life we planned so as to have the life that is waiting for us.", author: "Joseph Campbell" },
+        { text: "I have not failed. I've just found 10,000 ways that won't work.", author: "Thomas Edison" },
+        { text: "The two most important days in your life are the day you are born and the day you find out why.", author: "Mark Twain" },
+        { text: "Be the change that you wish to see in the world.", author: "Mahatma Gandhi" },
+        { text: "Real knowledge is to know the extent of one's ignorance.", author: "Confucius" },
+        { text: "The obstacle is the path.", author: "Zen Proverb" },
+        { text: "What we fear doing most is usually what we most need to do.", author: "Tim Ferriss" },
+        { text: "Fall seven times, stand up eight.", author: "Japanese Proverb" },
+        { text: "Strength does not come from physical capacity. It comes from an indomitable will.", author: "Mahatma Gandhi" },
+        { text: "The art of being wise is the art of knowing what to overlook.", author: "William James" },
+        { text: "Nothing in life is to be feared, it is only to be understood.", author: "Marie Curie" },
+        { text: "You must be the change you wish to see in the world.", author: "Mahatma Gandhi" },
+        { text: "The privilege of a lifetime is to become who you truly are.", author: "Carl Jung" },
+        { text: "Life can only be understood backwards; but it must be lived forwards.", author: "Søren Kierkegaard" },
+        { text: "The roots of education are bitter, but the fruit is sweet.", author: "Aristotle" },
+        { text: "It is during our darkest moments that we must focus to see the light.", author: "Aristotle" },
+        { text: "Seek not the paths of the ancients; seek what they sought.", author: "Matsuo Bashō" },
+        { text: "A ship in harbor is safe, but that is not what ships are built for.", author: "John A. Shedd" },
+        { text: "The things you own end up owning you.", author: "Chuck Palahniuk" },
+        { text: "Character cannot be developed in ease and quiet. Only through experience of trial and suffering can the soul be strengthened.", author: "Helen Keller" },
+        { text: "Adventure is worthwhile in itself.", author: "Amelia Earhart" },
+        { text: "The purpose of life is a life of purpose.", author: "Robert Byrne" },
+        { text: "What a man can be, he must be.", author: "Abraham Maslow" },
+        { text: "Darkness cannot drive out darkness; only light can do that.", author: "Martin Luther King Jr." },
+        { text: "Growth is the only evidence of life.", author: "John Henry Newman" },
+        { text: "The cosmos is within us. We are made of star-stuff. We are a way for the universe to know itself.", author: "Carl Sagan" },
+        { text: "Everything you've ever wanted is on the other side of fear.", author: "George Addair" },
+        { text: "He who is not courageous enough to take risks will accomplish nothing in life.", author: "Muhammad Ali" },
+        { text: "The only impossible journey is the one you never begin.", author: "Tony Robbins" },
+        { text: "Great minds discuss ideas; average minds discuss events; small minds discuss people.", author: "Eleanor Roosevelt" },
+        { text: "Mastering others is strength. Mastering yourself is true power.", author: "Lao Tzu" },
+        { text: "The question isn't who is going to let me; it's who is going to stop me.", author: "Ayn Rand" },
+        { text: "You are never too old to set another goal or to dream a new dream.", author: "C.S. Lewis" },
+        { text: "We do not see things as they are, we see things as we are.", author: "Anaïs Nin" }
+    ];
+
+    function getQuoteForDate(date) {
+        const dateKey = formatDateKey(date);
+        // Deterministic seed from date string
+        let hash = 0;
+        for (let i = 0; i < dateKey.length; i++) {
+            hash = ((hash << 5) - hash) + dateKey.charCodeAt(i);
+            hash |= 0;
+        }
+        const index = Math.abs(hash) % REFLECTION_QUOTES.length;
+        return REFLECTION_QUOTES[index];
+    }
+    // ========================================
+    // DATE UTILITIES
+    // ========================================
+    function formatDateKey(date) {
+        const y = date.getFullYear();
+        const m = String(date.getMonth() + 1).padStart(2, '0');
+        const d = String(date.getDate()).padStart(2, '0');
+        return `${y}-${m}-${d}`;
+    }
+
+    function isDateUnlocked(date) {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const check = new Date(date);
+        check.setHours(0, 0, 0, 0);
+        return check >= APP_START_DATE && check <= today;
+    }
+
+    // ========================================
+    // CONTENT FETCHING & CACHING
+    // ========================================
+    async function fetchContent(date) {
+        const dateKey = formatDateKey(date);
+
+        const cached = localStorage.getItem(CACHE_PREFIX + dateKey);
+        if (cached) {
+            try { return JSON.parse(cached); } catch(e) { /* fall through */ }
         }
 
-        function isDateUnlocked(date) {
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            const check = new Date(date);
-            check.setHours(0, 0, 0, 0);
-            return check >= APP_START_DATE && check <= today;
+        try {
+            const apiRes = await fetch(`/.netlify/functions/get-content?date=${dateKey}`);
+            if (apiRes.ok) {
+                const data = await apiRes.json();
+                localStorage.setItem(CACHE_PREFIX + dateKey, JSON.stringify(data));
+                return data;
+            }
+        } catch (err) {
+            console.log(`API fetch failed for ${dateKey}, trying static file...`);
         }
 
-        // ========================================
-        // CONTENT FETCHING & CACHING
-        // ========================================
-        
-        async function fetchContent(date) {
-            const dateKey = formatDateKey(date);
-            
-            // Check local cache first
-            const cached = localStorage.getItem(CACHE_PREFIX + dateKey);
-            if (cached) {
-                try { return JSON.parse(cached); } catch(e) { /* fall through */ }
+        try {
+            const res = await fetch(`${CONTENT_BASE_URL}/${dateKey}.json`);
+            if (res.ok) {
+                const data = await res.json();
+                localStorage.setItem(CACHE_PREFIX + dateKey, JSON.stringify(data));
+                return data;
             }
-
-            // Try Netlify Function API (reads from Blobs, generates if needed)
-            try {
-                const apiRes = await fetch(`/.netlify/functions/get-content?date=${dateKey}`);
-                if (apiRes.ok) {
-                    const data = await apiRes.json();
-                    localStorage.setItem(CACHE_PREFIX + dateKey, JSON.stringify(data));
-                    return data;
-                }
-            } catch (err) {
-                console.log(`API fetch failed for ${dateKey}, trying static file...`);
-            }
-
-            // Fall back to static JSON file
-            try {
-                const res = await fetch(`${CONTENT_BASE_URL}/${dateKey}.json`);
-                if (res.ok) {
-                    const data = await res.json();
-                    localStorage.setItem(CACHE_PREFIX + dateKey, JSON.stringify(data));
-                    return data;
-                }
-            } catch (err) {
-                console.error(`All sources failed for ${dateKey}:`, err);
-            }
-
-            return null;
+        } catch (err) {
+            console.error(`All sources failed for ${dateKey}:`, err);
         }
 
-        // ========================================
-        // DISPLAY CONTENT
-        // ========================================
-        
-        async function displayContent(date) {
-            if (!isDateUnlocked(date)) {
-                alert("This date hasn't been unlocked yet!");
-                return;
-            }
+        return null;
+    }
 
-            const main = document.getElementById('mainContent');
+    // Fallback for preview mode
+    async function fetchContentWithFallback(date) {
+        const content = await fetchContent(date);
+        const key = formatDateKey(date);
+        const result = content || MOCK_CONTENT[key] || MOCK_CONTENT["2026-02-10"];
+        // Always use curated quote pool
+        result.quote = getQuoteForDate(date);
+        return result;
+    }
+
+    // ========================================
+    // DISPLAY CONTENT
+    // ========================================
+    async function displayContent(date) {
+        if (!isDateUnlocked(date)) {
+            alert("This date hasn't been unlocked yet!");
+            return;
+        }
+
+        const main = document.getElementById('mainContent');
+        main.innerHTML = `
+            <div class="skeleton-card"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-subtitle"></div><div class="skeleton-line skeleton-text"></div><div class="skeleton-line skeleton-btn"></div></div>
+            <div class="skeleton-card"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-img"></div><div class="skeleton-line skeleton-text"></div><div class="skeleton-line skeleton-text-short"></div></div>
+            <div class="skeleton-card"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-text"></div><div class="skeleton-line skeleton-text"></div><div class="skeleton-line skeleton-text-short"></div></div>
+            <div class="skeleton-card"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-img"></div><div class="skeleton-line skeleton-text"></div></div>
+            <div class="skeleton-card"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-img"></div><div class="skeleton-line skeleton-text-short"></div></div>
+            <div style="text-align:center; padding:20px; color:var(--text-secondary); font-size:14px;">Generating today's muse... this may take a moment</div>
+        `;
+
+        const content = await fetchContentWithFallback(date);
+        if (!content) {
             main.innerHTML = `
-                <div class="skeleton-card"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-subtitle"></div><div class="skeleton-line skeleton-text"></div><div class="skeleton-line skeleton-btn"></div></div>
-                <div class="skeleton-card"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-img"></div><div class="skeleton-line skeleton-text"></div><div class="skeleton-line skeleton-text-short"></div></div>
-                <div class="skeleton-card"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-text"></div><div class="skeleton-line skeleton-text"></div><div class="skeleton-line skeleton-text-short"></div></div>
-                <div class="skeleton-card"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-img"></div><div class="skeleton-line skeleton-text"></div></div>
-                <div class="skeleton-card"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-img"></div><div class="skeleton-line skeleton-text-short"></div></div>
-                <div style="text-align:center; padding:20px; color:var(--text-secondary); font-size:14px;">Generating today's muse... this may take a moment</div>
-            `;
-
-            const content = await fetchContent(date);
-
-            if (!content) {
-                main.innerHTML = `
-                    <div class="empty-state" style="background: var(--bg-secondary); padding: 60px 20px; border-radius: 12px;">
-                        <div class="empty-state-icon">😔</div>
-                        <h3 style="margin-bottom: 12px; color: var(--text-tertiary);">Content Unavailable</h3>
-                        <p>Unable to load today's content. Please check your connection and try again.</p>
-                    </div>`;
-                return;
-            }
-
-            window._currentContent = content;
-            window._currentDate = date;
-
-            const sections = [
-                { type: 'music', title: 'Classical Music', data: content.music },
-                { type: 'painting', title: 'Visual Art', data: content.painting },
-                { type: 'poem', title: 'Poetry', data: content.poem },
-                { type: 'sculpture', title: 'Sculpture', data: content.sculpture },
-                { type: 'photography', title: 'Photography', data: content.photography },
-                { type: 'architecture', title: 'Architecture', data: content.architecture },
-                { type: 'astronomy', title: 'Astronomy', data: content.astronomy },
-                { type: 'quote', title: 'Daily Inspiration', data: content.quote }
-            ];
-
-            main.innerHTML = '';
-            sections.forEach(({ type, title, data }) => {
-                if (data) {
-                    const section = createSection(type, title, data, date);
-                    main.appendChild(section);
-                }
-            });
-            updateFavoriteButtons();
-        }
-
-        function createSection(type, title, item, date) {
-            const section = document.createElement('div');
-            section.className = 'content-section';
-            const dateStr = date.toISOString();
-            const artistName = item.artist || item.author || item.composer || item.architect || item.photographer || item.credit || '';
-            const itemTitle = item.title || item.piece || item.name || (item.text ? item.text.substring(0, 30) + '...' : '');
-
-            section.innerHTML = `
-                <h2>${title}</h2>
-                <div>${generateContent(type, item)}</div>
-                <div class="section-actions">
-                    <button class="favorite-btn" data-type="${type}" data-date="${dateStr}"
-                            onclick="toggleFavorite('${type}', new Date('${dateStr}'), '${esc(itemTitle)}', '${esc(artistName)}')">☆</button>
-                    <button class="share-btn" onclick="openShareModal('${type}', '${esc(itemTitle)}', '${esc(artistName)}')">📤</button>
+                <div class="empty-state" style="background: var(--bg-secondary); padding: 60px 20px; border-radius: 12px;">
+                    <div class="empty-state-icon">😔</div>
+                    <h3 style="margin-bottom: 12px; color: var(--text-tertiary);">Content Unavailable</h3>
+                    <p>Unable to load today's content. Please check your connection and try again.</p>
                 </div>`;
-            return section;
+            return;
         }
 
-        function esc(str) { return (str || '').replace(/'/g, "\\'").replace(/"/g, '&quot;'); }
+        window._currentContent = content;
+        window._currentDate = date;
 
-        function generateContent(type, item) {
-            switch(type) {
-                case 'music':
-                    const spotifyLink = `https://open.spotify.com/search/${encodeURIComponent(item.spotifyQuery || item.piece)}`;
-                    return `
-                        <p><strong>${item.piece}</strong></p>
-                        <p>By ${item.composer} (${item.year})</p>
-                        <div class="button-group">
-                            <a href="${spotifyLink}" target="_blank" rel="noopener" class="spotify-link">Listen on Spotify</a>
-                            <a href="${item.wiki}" target="_blank" rel="noopener" class="learn-more-link">Learn more</a>
-                        </div>`;
-                case 'poem':
-                    return `
-                        <p><strong>${item.title}</strong></p>
-                        <p>By ${item.author}</p>
-                        <div class="poem-text">${item.text}</div>
-                        <div class="button-group">
-                            <a href="${item.url}" target="_blank" rel="noopener" class="spotify-link">Read Full Poem</a>
-                            <a href="${item.wiki}" target="_blank" rel="noopener" class="learn-more-link">Learn more</a>
-                        </div>`;
-                case 'painting':
-                case 'sculpture':
-                case 'photography': {
-                    const img = item.image ? `<img src="${item.image}" alt="${item.title}" class="content-image" onerror="this.classList.add('error')">` : '';
-                    const creator = item.artist || item.photographer || '';
-                    const btnText = type === 'photography' ? 'View Photo' : type === 'sculpture' ? 'View Details' : 'View at Museum';
-                    return `
-                        ${img}
-                        <p><strong>${item.title}</strong></p>
-                        <p>By ${creator} (${item.year})</p>
-                        <p style="margin-top: 12px;">${item.description}</p>
-                        <div class="button-group">
-                            <a href="${item.url}" target="_blank" rel="noopener" class="spotify-link">${btnText}</a>
-                            <a href="${item.wiki}" target="_blank" rel="noopener" class="learn-more-link">Learn more</a>
-                        </div>`;
-                }
-                case 'architecture': {
-                    const archImg = item.image ? `<img src="${item.image}" alt="${item.name}" class="content-image" onerror="this.classList.add('error')">` : '';
-                    return `
-                        ${archImg}
-                        <p><strong>${item.name}</strong></p>
-                        <p>By ${item.architect} (${item.year})</p>
-                        <p style="margin-top: 8px; color: var(--text-secondary);">${item.location}</p>
-                        <p style="margin-top: 12px;">${item.description}</p>
-                        <div class="button-group">
-                            <a href="${item.url}" target="_blank" rel="noopener" class="spotify-link">View Details</a>
-                            <a href="${item.wiki}" target="_blank" rel="noopener" class="learn-more-link">Learn more</a>
-                        </div>`;
-                }
-                case 'astronomy': {
-                    const astroImg = item.image ? `<img src="${item.image}" alt="${item.title}" class="content-image" style="max-width: 400px;" onerror="this.classList.add('error')">` : '';
-                    return `
-                        ${astroImg}
-                        <p><strong>${item.title}</strong></p>
-                        <p style="margin-top: 8px;">${item.description || ''}</p>
-                        <p style="margin-top: 8px; font-size: 0.85em; font-style: italic; color: var(--text-secondary);">Credit: ${item.credit || 'NASA APOD'}</p>
-                        <div class="button-group">
-                            <a href="https://apod.nasa.gov/apod/" target="_blank" rel="noopener" class="spotify-link">View on NASA APOD</a>
-                        </div>`;
-                }
-                case 'quote':
-                    return `
-                        <div class="poem-text">"${item.text}"</div>
-                        <p style="text-align: right; margin-top: 10px; color: var(--text-secondary); font-style: italic;">— ${item.author}</p>`;
-                default:
-                    return '<p>Content coming soon...</p>';
+        const sections = [
+            { type: 'music', title: 'Classical Music', data: content.music },
+            { type: 'painting', title: 'Visual Art', data: content.painting },
+            { type: 'poem', title: 'Poetry', data: content.poem },
+            { type: 'sculpture', title: 'Sculpture', data: content.sculpture },
+            { type: 'photography', title: 'Photography', data: content.photography },
+            { type: 'architecture', title: 'Architecture', data: content.architecture },
+            { type: 'astronomy', title: 'Astronomy', data: content.astronomy },
+            { type: 'quote', title: 'The Examined Life', data: content.quote }
+        ];
+
+        main.innerHTML = '';
+        sections.forEach(({ type, title, data }) => {
+            if (data) {
+                const section = createSection(type, title, data, date);
+                main.appendChild(section);
             }
-        }
+        });
+        updateFavoriteButtons();
+    }
 
-        // ========================================
-        // MENU
-        // ========================================
-        function toggleMenu() {
-            document.getElementById('hamburgerMenu').classList.toggle('active');
-            document.getElementById('menuOverlay').classList.toggle('active');
-        }
-        function closeMenu() {
-            document.getElementById('hamburgerMenu').classList.remove('active');
-            document.getElementById('menuOverlay').classList.remove('active');
-        }
+    function createSection(type, title, item, date) {
+        const section = document.createElement('div');
+        section.className = 'content-section';
+        const dateStr = date.toISOString();
+        const artistName = item.artist || item.author || item.composer || item.architect || item.photographer || item.credit || '';
+        const itemTitle = item.title || item.piece || item.name || (item.text ? item.text.substring(0, 30) + '...' : '');
 
-        // ========================================
-        // DARK MODE
-        // ========================================
-        function initDarkMode() {
-            if (localStorage.getItem(STORAGE_KEYS.DARK_MODE) === 'true') {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                const el = document.getElementById('menuDarkModeText');
-                if (el) el.textContent = 'Light Mode';
+        section.innerHTML = `
+            <h2>${title}</h2>
+            <div>${generateContent(type, item)}</div>
+            <div class="section-actions">
+                <button class="favorite-btn" data-type="${type}" data-date="${dateStr}" onclick="toggleFavorite('${type}', new Date('${dateStr}'), '${esc(itemTitle)}', '${esc(artistName)}')">☆</button>
+                <button class="share-btn" onclick="openShareModal('${type}', '${esc(itemTitle)}', '${esc(artistName)}')">${IOS_SHARE_ICON}</button>
+            </div>`;
+        return section;
+    }
+
+    function esc(str) {
+        return (str || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+    }
+
+    function generateContent(type, item) {
+        switch(type) {
+            case 'music':
+                const spotifyLink = `https://open.spotify.com/search/${encodeURIComponent(item.spotifyQuery || item.piece)}`;
+                return `
+                    <p><strong>${item.piece}</strong></p>
+                    <p>By ${item.composer} (${item.year})</p>
+                    <div class="button-group">
+                        <a href="${spotifyLink}" target="_blank" rel="noopener" class="spotify-link">Listen on Spotify</a>
+                        <a href="${item.wiki}" target="_blank" rel="noopener" class="learn-more-link">Learn more</a>
+                    </div>`;
+            case 'poem':
+                return `
+                    <p><strong>${item.title}</strong></p>
+                    <p>By ${item.author}</p>
+                    <div class="poem-text">${item.text}</div>
+                    <div class="button-group">
+                        <a href="${item.url}" target="_blank" rel="noopener" class="spotify-link">Read Full Poem</a>
+                        <a href="${item.wiki}" target="_blank" rel="noopener" class="learn-more-link">Learn more</a>
+                    </div>`;
+            case 'painting':
+            case 'sculpture':
+            case 'photography': {
+                const img = item.image ? `<img src="${item.image}" alt="${item.title}" class="content-image" onerror="this.classList.add('error')">` : '';
+                const creator = item.artist || item.photographer || '';
+                const btnText = type === 'photography' ? 'View Photo' : type === 'sculpture' ? 'View Details' : 'View at Museum';
+                return `
+                    ${img}
+                    <p><strong>${item.title}</strong></p>
+                    <p>By ${creator} (${item.year})</p>
+                    <p style="margin-top: 12px;">${item.description}</p>
+                    <div class="button-group">
+                        <a href="${item.url}" target="_blank" rel="noopener" class="spotify-link">${btnText}</a>
+                        <a href="${item.wiki}" target="_blank" rel="noopener" class="learn-more-link">Learn more</a>
+                    </div>`;
             }
+            case 'architecture': {
+                const archImg = item.image ? `<img src="${item.image}" alt="${item.name}" class="content-image" onerror="this.classList.add('error')">` : '';
+                return `
+                    ${archImg}
+                    <p><strong>${item.name}</strong></p>
+                    <p>By ${item.architect} (${item.year})</p>
+                    <p style="margin-top: 8px; color: var(--text-secondary);">${item.location}</p>
+                    <p style="margin-top: 12px;">${item.description}</p>
+                    <div class="button-group">
+                        <a href="${item.url}" target="_blank" rel="noopener" class="spotify-link">View Details</a>
+                        <a href="${item.wiki}" target="_blank" rel="noopener" class="learn-more-link">Learn more</a>
+                    </div>`;
+            }
+            case 'astronomy': {
+                const astroImg = item.image ? `<img src="${item.image}" alt="${item.title}" class="content-image" style="max-width: 400px;" onerror="this.classList.add('error')">` : '';
+                return `
+                    ${astroImg}
+                    <p><strong>${item.title}</strong></p>
+                    <p style="margin-top: 8px;">${item.description || ''}</p>
+                    <p style="margin-top: 8px; font-size: 0.85em; font-style: italic; color: var(--text-secondary);">Credit: ${item.credit || 'NASA APOD'}</p>
+                    <div class="button-group">
+                        <a href="https://apod.nasa.gov/apod/" target="_blank" rel="noopener" class="spotify-link">View on NASA APOD</a>
+                    </div>`;
+            }
+            case 'quote':
+                return `
+                    <div class="poem-text">"${item.text}"</div>
+                    <p style="text-align: right; margin-top: 10px; color: var(--text-secondary); font-style: italic;">— ${item.author}</p>`;
+            default:
+                return '<p>Content coming soon...</p>';
         }
-        function toggleDarkMode() {
-            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-            document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    }
+
+    // ========================================
+    // MENU
+    // ========================================
+    function toggleMenu() {
+        document.getElementById('hamburgerMenu').classList.toggle('active');
+        document.getElementById('menuOverlay').classList.toggle('active');
+    }
+    function closeMenu() {
+        document.getElementById('hamburgerMenu').classList.remove('active');
+        document.getElementById('menuOverlay').classList.remove('active');
+    }
+
+    // ========================================
+    // DARK MODE
+    // ========================================
+    function initDarkMode() {
+        if (localStorage.getItem(STORAGE_KEYS.DARK_MODE) === 'true') {
+            document.documentElement.setAttribute('data-theme', 'dark');
             const el = document.getElementById('menuDarkModeText');
-            if (el) el.textContent = isDark ? 'Dark Mode' : 'Light Mode';
-            localStorage.setItem(STORAGE_KEYS.DARK_MODE, !isDark);
+            if (el) el.textContent = 'Light Mode';
         }
+    }
+    function toggleDarkMode() {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        const el = document.getElementById('menuDarkModeText');
+        if (el) el.textContent = isDark ? 'Dark Mode' : 'Light Mode';
+        localStorage.setItem(STORAGE_KEYS.DARK_MODE, !isDark);
+    }
 
-        // ========================================
-        // FAVORITES
-        // ========================================
-        function getFavorites() {
-            try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.FAVORITES)) || {}; } catch(e) { return {}; }
-        }
-        function saveFavorites(f) { localStorage.setItem(STORAGE_KEYS.FAVORITES, JSON.stringify(f)); }
-        function createItemId(type, date) { return `${type}-${date.toISOString().split('T')[0]}`; }
-        function isFavorite(type, date) { return !!getFavorites()[createItemId(type, date)]; }
-        function toggleFavorite(type, date, title, artist) {
-            const favs = getFavorites();
-            const id = createItemId(type, date);
-            if (favs[id]) { delete favs[id]; } else { favs[id] = { type, date: date.toISOString(), title, artist, savedAt: new Date().toISOString() }; }
-            saveFavorites(favs);
-            updateFavoriteButtons();
-        }
-        function updateFavoriteButtons() {
-            document.querySelectorAll('.favorite-btn').forEach(btn => {
-                const type = btn.dataset.type;
-                const date = new Date(btn.dataset.date);
-                if (isFavorite(type, date)) { btn.classList.add('active'); btn.textContent = '⭐'; }
-                else { btn.classList.remove('active'); btn.textContent = '☆'; }
-            });
-        }
-        function showFavorites() {
-            const favs = Object.values(getFavorites()).sort((a, b) => new Date(b.savedAt) - new Date(a.savedAt));
-            const grid = document.getElementById('favoritesGrid');
-            if (favs.length === 0) {
-                grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⭐</div><p>No favorites yet!</p><p style="margin-top:8px;font-size:0.9em;">Tap the ☆ icon on any item to save it here.</p></div>';
+    // ========================================
+    // FAVORITES
+    // ========================================
+    function getFavorites() {
+        try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.FAVORITES)) || {}; }
+        catch(e) { return {}; }
+    }
+    function saveFavorites(f) { localStorage.setItem(STORAGE_KEYS.FAVORITES, JSON.stringify(f)); }
+    function createItemId(type, date) { return `${type}-${date.toISOString().split('T')[0]}`; }
+    function isFavorite(type, date) { return !!getFavorites()[createItemId(type, date)]; }
+
+    function toggleFavorite(type, date, title, artist) {
+        const favs = getFavorites();
+        const id = createItemId(type, date);
+        if (favs[id]) { delete favs[id]; }
+        else { favs[id] = { type, date: date.toISOString(), title, artist, savedAt: new Date().toISOString() }; }
+        saveFavorites(favs);
+        updateFavoriteButtons();
+    }
+
+    function updateFavoriteButtons() {
+        document.querySelectorAll('.favorite-btn').forEach(btn => {
+            const type = btn.dataset.type;
+            const date = new Date(btn.dataset.date);
+            if (isFavorite(type, date)) {
+                btn.classList.add('active');
+                btn.textContent = '⭐';
             } else {
-                grid.innerHTML = favs.map(f => `
-                    <div class="favorite-item">
-                        <div class="favorite-info"><h4>${f.title}</h4><p>${f.artist} · ${f.type}</p></div>
-                        <button class="remove-favorite" onclick="removeFavorite('${createItemId(f.type, new Date(f.date))}')">Remove</button>
-                    </div>`).join('');
+                btn.classList.remove('active');
+                btn.textContent = '☆';
             }
-            document.getElementById('favoritesModal').classList.add('active');
-        }
-        function removeFavorite(id) { const f = getFavorites(); delete f[id]; saveFavorites(f); showFavorites(); updateFavoriteButtons(); }
-        function closeFavoritesModal() { document.getElementById('favoritesModal').classList.remove('active'); }
+        });
+    }
 
-        // ========================================
-        // SHARE
-        // ========================================
-        let currentShareItem = null;
-        function openShareModal(type, title, artist) { currentShareItem = { type, title, artist }; document.getElementById('shareModal').classList.add('active'); }
-        function closeShareModal() { document.getElementById('shareModal').classList.remove('active'); currentShareItem = null; }
-        function shareVia(platform) {
-            if (!currentShareItem) return;
-            const { type, title, artist } = currentShareItem;
-            const text = `Check out today's ${type} on Daily Muse: "${title}" by ${artist}`;
-            const url = window.location.href;
-            switch(platform) {
-                case 'twitter': window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank'); break;
-                case 'facebook': window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(text)}`, '_blank'); break;
-                case 'email': window.location.href = `mailto:?subject=${encodeURIComponent('Daily Muse')}&body=${encodeURIComponent(text + '\n\n' + url)}`; break;
-                case 'copy': navigator.clipboard.writeText(text + '\n\n' + url).then(() => alert('Link copied!')); break;
-            }
-            closeShareModal();
+    function showFavorites() {
+        const favs = Object.values(getFavorites()).sort((a, b) => new Date(b.savedAt) - new Date(a.savedAt));
+        const grid = document.getElementById('favoritesGrid');
+        if (favs.length === 0) {
+            grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⭐</div><p>No favorites yet!</p><p style="margin-top:8px;font-size:0.9em;">Tap the ☆ icon on any item to save it here.</p></div>';
+        } else {
+            grid.innerHTML = favs.map(f => `
+                <div class="favorite-item">
+                    <div class="favorite-info"><h4>${f.title}</h4><p>${f.artist} · ${f.type}</p></div>
+                    <button class="remove-favorite" onclick="removeFavorite('${createItemId(f.type, new Date(f.date))}')">Remove</button>
+                </div>`).join('');
         }
+        document.getElementById('favoritesModal').classList.add('active');
+    }
 
-        // ========================================
-        // ARCHIVE
-        // ========================================
-        let currentArchiveMonth = new Date();
-        function toggleArchive() {
-            const archive = document.getElementById('archive');
-            archive.classList.toggle('active');
-            if (archive.classList.contains('active')) { currentArchiveMonth = new Date(2026, 0, 1); generateCalendar(); }
+    function removeFavorite(id) {
+        const f = getFavorites();
+        delete f[id];
+        saveFavorites(f);
+        showFavorites();
+        updateFavoriteButtons();
+    }
+
+    function closeFavoritesModal() {
+        document.getElementById('favoritesModal').classList.remove('active');
+    }
+
+    // ========================================
+    // SHARE
+    // ========================================
+    let currentShareItem = null;
+    function openShareModal(type, title, artist) {
+        currentShareItem = { type, title, artist };
+        document.getElementById('shareModal').classList.add('active');
+    }
+    function closeShareModal() {
+        document.getElementById('shareModal').classList.remove('active');
+        currentShareItem = null;
+    }
+    function shareVia(platform) {
+        if (!currentShareItem) return;
+        const { type, title, artist } = currentShareItem;
+        const text = `Check out today's ${type} on Daily Muse: "${title}" by ${artist}`;
+        const url = window.location.href;
+        switch(platform) {
+            case 'x': window.open(`https://x.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank'); break;
+            case 'facebook': window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(text)}`, '_blank'); break;
+            case 'linkedin': window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank'); break;
+            case 'instagram': navigator.clipboard.writeText(text + '\n\n' + url).then(() => { alert('Text copied! Opening Instagram — paste into your story or post.'); window.open('https://www.instagram.com/', '_blank'); }); break;
+            case 'email': window.location.href = `mailto:?subject=${encodeURIComponent('Daily Muse')}&body=${encodeURIComponent(text + '\n\n' + url)}`; break;
+            case 'copy': navigator.clipboard.writeText(text + '\n\n' + url).then(() => alert('Link copied!')); break;
         }
-        function changeMonth(dir) {
-            const next = new Date(currentArchiveMonth);
-            next.setMonth(next.getMonth() + dir);
-            if (next < new Date(2026, 0, 1)) return;
-            const today = new Date();
-            if (next.getFullYear() > today.getFullYear() || (next.getFullYear() === today.getFullYear() && next.getMonth() > today.getMonth())) return;
-            currentArchiveMonth = next;
+        closeShareModal();
+    }
+
+    // ========================================
+    // ARCHIVE
+    // ========================================
+    let currentArchiveMonth = new Date();
+
+    function toggleArchive() {
+        const archive = document.getElementById('archive');
+        archive.classList.toggle('active');
+        if (archive.classList.contains('active')) {
+            currentArchiveMonth = new Date(2026, 1, 1);
             generateCalendar();
         }
-        function generateCalendar() {
-            const grid = document.getElementById('calendarGrid');
-            const monthDisplay = document.getElementById('currentMonth');
-            const prevBtn = document.getElementById('prevMonthBtn');
-            const nextBtn = document.getElementById('nextMonthBtn');
-            monthDisplay.textContent = currentArchiveMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-            prevBtn.disabled = currentArchiveMonth.getFullYear() === 2026 && currentArchiveMonth.getMonth() === 0;
-            const today = new Date();
-            nextBtn.disabled = currentArchiveMonth.getFullYear() === today.getFullYear() && currentArchiveMonth.getMonth() === today.getMonth();
-            grid.innerHTML = '';
-            ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(d => {
-                const h = document.createElement('div'); h.className = 'calendar-header'; h.textContent = d; grid.appendChild(h);
-            });
-            const firstDay = new Date(currentArchiveMonth.getFullYear(), currentArchiveMonth.getMonth(), 1);
-            const daysInMonth = new Date(currentArchiveMonth.getFullYear(), currentArchiveMonth.getMonth() + 1, 0).getDate();
-            const todayDate = new Date(); todayDate.setHours(0,0,0,0);
-            for (let i = 0; i < firstDay.getDay(); i++) {
-                const e = document.createElement('div'); e.className = 'calendar-day empty'; grid.appendChild(e);
-            }
-            for (let day = 1; day <= daysInMonth; day++) {
-                const date = new Date(currentArchiveMonth.getFullYear(), currentArchiveMonth.getMonth(), day);
-                date.setHours(0,0,0,0);
-                const el = document.createElement('div');
-                el.className = 'calendar-day';
-                el.textContent = day;
-                if (date.getTime() === todayDate.getTime()) el.classList.add('today');
-                if (!isDateUnlocked(date)) {
-                    el.classList.add('locked');
-                    el.title = 'Unlocks on ' + date.toLocaleDateString();
-                } else {
-                    el.onclick = () => {
-                        document.querySelectorAll('.calendar-day').forEach(e => e.classList.remove('selected'));
-                        el.classList.add('selected');
-                        displayContent(date);
-                        document.getElementById('currentDate').textContent = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-                        document.getElementById('archive').classList.remove('active');
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                    };
-                }
-                grid.appendChild(el);
-            }
-        }
+    }
 
-        // ========================================
-        // INIT
-        // ========================================
-        document.querySelectorAll('.modal-overlay').forEach(o => {
-            o.addEventListener('click', e => { if (e.target === o) o.classList.remove('active'); });
+    function changeMonth(dir) {
+        const next = new Date(currentArchiveMonth);
+        next.setMonth(next.getMonth() + dir);
+        if (next < new Date(2026, 1, 1)) return;
+        const today = new Date();
+        if (next.getFullYear() > today.getFullYear() || (next.getFullYear() === today.getFullYear() && next.getMonth() > today.getMonth())) return;
+        currentArchiveMonth = next;
+        generateCalendar();
+    }
+
+    function generateCalendar() {
+        const grid = document.getElementById('calendarGrid');
+        const monthDisplay = document.getElementById('currentMonth');
+        const prevBtn = document.getElementById('prevMonthBtn');
+        const nextBtn = document.getElementById('nextMonthBtn');
+
+        monthDisplay.textContent = currentArchiveMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+        prevBtn.disabled = currentArchiveMonth.getFullYear() === 2026 && currentArchiveMonth.getMonth() === 1;
+        const today = new Date();
+        nextBtn.disabled = currentArchiveMonth.getFullYear() === today.getFullYear() && currentArchiveMonth.getMonth() === today.getMonth();
+
+        grid.innerHTML = '';
+        ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(d => {
+            const h = document.createElement('div');
+            h.className = 'calendar-header';
+            h.textContent = d;
+            grid.appendChild(h);
         });
 
-        function init() {
-            initDarkMode();
-            const today = new Date();
-            const localToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-            if (localToday < APP_START_DATE) {
-                document.getElementById('currentDate').textContent = 'Launching January 1, 2026';
-                document.getElementById('mainContent').innerHTML = `
-                    <div class="empty-state" style="background: var(--bg-secondary); padding: 60px 20px; border-radius: 12px; margin-top: 40px;">
-                        <div class="empty-state-icon">🎨</div>
-                        <h3 style="margin-bottom: 12px; color: var(--text-tertiary);">Coming Soon!</h3>
-                        <p>Daily Muse launches on January 1, 2026.</p>
-                        <p style="margin-top: 8px;">A new piece of culture will unlock each day.</p>
-                    </div>`;
-                return;
-            }
-            displayContent(localToday);
-            document.getElementById('currentDate').textContent = localToday.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        const firstDay = new Date(currentArchiveMonth.getFullYear(), currentArchiveMonth.getMonth(), 1);
+        const daysInMonth = new Date(currentArchiveMonth.getFullYear(), currentArchiveMonth.getMonth() + 1, 0).getDate();
+        const todayDate = new Date();
+        todayDate.setHours(0,0,0,0);
+
+        for (let i = 0; i < firstDay.getDay(); i++) {
+            const e = document.createElement('div');
+            e.className = 'calendar-day empty';
+            grid.appendChild(e);
         }
 
-        init();
-    </script>
+        for (let day = 1; day <= daysInMonth; day++) {
+            const date = new Date(currentArchiveMonth.getFullYear(), currentArchiveMonth.getMonth(), day);
+            date.setHours(0,0,0,0);
+            const el = document.createElement('div');
+            el.className = 'calendar-day';
+            el.textContent = day;
+
+            if (date.getTime() === todayDate.getTime()) el.classList.add('today');
+
+            if (!isDateUnlocked(date)) {
+                el.classList.add('locked');
+                el.title = 'Unlocks on ' + date.toLocaleDateString();
+            } else {
+                el.onclick = () => {
+                    document.querySelectorAll('.calendar-day').forEach(e => e.classList.remove('selected'));
+                    el.classList.add('selected');
+                    displayContent(date);
+                    document.getElementById('currentDate').textContent = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                    document.getElementById('archive').classList.remove('active');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                };
+            }
+            grid.appendChild(el);
+        }
+    }
+
+    // ========================================
+    // INIT
+    // ========================================
+    document.querySelectorAll('.modal-overlay').forEach(o => {
+        o.addEventListener('click', e => { if (e.target === o) o.classList.remove('active'); });
+    });
+
+    function init() {
+        initDarkMode();
+        const today = new Date();
+        const localToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+        if (localToday < APP_START_DATE) {
+            document.getElementById('currentDate').textContent = 'Launching February 1, 2026';
+            document.getElementById('mainContent').innerHTML = `
+                <div class="empty-state" style="background: var(--bg-secondary); padding: 60px 20px; border-radius: 12px; margin-top: 40px;">
+                    <div class="empty-state-icon">🎨</div>
+                    <h3 style="margin-bottom: 12px; color: var(--text-tertiary);">Coming Soon!</h3>
+                    <p>Daily Muse launches on February 1, 2026.</p>
+                    <p style="margin-top: 8px;">A new piece of culture will unlock each day.</p>
+                </div>`;
+            return;
+        }
+
+        displayContent(localToday);
+        document.getElementById('currentDate').textContent = localToday.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+
+    init();
+</script>
 </body>
 </html>
