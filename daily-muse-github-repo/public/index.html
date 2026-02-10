@@ -224,13 +224,14 @@
         }
 
         .content-section:nth-child(1) { animation-delay: 0.1s; }
-        .content-section:nth-child(2) { animation-delay: 0.2s; }
-        .content-section:nth-child(3) { animation-delay: 0.3s; }
-        .content-section:nth-child(4) { animation-delay: 0.4s; }
-        .content-section:nth-child(5) { animation-delay: 0.5s; }
-        .content-section:nth-child(6) { animation-delay: 0.6s; }
-        .content-section:nth-child(7) { animation-delay: 0.7s; }
-        .content-section:nth-child(8) { animation-delay: 0.8s; }
+        .content-section:nth-child(2) { animation-delay: 0.15s; }
+        .content-section:nth-child(3) { animation-delay: 0.2s; }
+        .content-section:nth-child(4) { animation-delay: 0.25s; }
+        .content-section:nth-child(5) { animation-delay: 0.3s; }
+        .content-section:nth-child(6) { animation-delay: 0.35s; }
+        .content-section:nth-child(7) { animation-delay: 0.4s; }
+        .content-section:nth-child(8) { animation-delay: 0.45s; }
+        .content-section:nth-child(n+9) { animation-delay: 0.5s; }
 
         .content-section:hover {
             box-shadow: var(--shadow-md);
@@ -483,6 +484,118 @@
             margin-bottom: 16px;
         }
 
+        /* ========== CUSTOMIZE MODAL ========== */
+        .customize-section-label {
+            font-size: 0.75em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-secondary);
+            padding: 16px 0 8px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 4px;
+        }
+        .customize-section-label:first-child { padding-top: 0; }
+        .category-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .category-toggle:last-child { border-bottom: none; }
+        .category-toggle-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .category-toggle-emoji { font-size: 1.3em; }
+        .category-toggle-name {
+            font-size: 0.95em;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        .category-toggle-tag {
+            font-size: 0.7em;
+            font-weight: 500;
+            color: var(--accent-blue);
+            background: rgba(59,130,246,0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 6px;
+        }
+        .toggle-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+        .toggle-switch input { display: none; }
+        .toggle-track {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--border-color);
+            border-radius: 12px;
+            transition: background 0.2s ease;
+        }
+        .toggle-switch input:checked + .toggle-track { background: var(--accent-blue); }
+        .toggle-knob {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: left 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        .toggle-switch input:checked ~ .toggle-knob { left: 22px; }
+        .customize-footer {
+            padding: 16px 24px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+        .customize-footer button {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 0.875em;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid var(--border-color);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+        .customize-footer button:hover { background: var(--bg-tertiary); }
+        .customize-footer .btn-primary {
+            background: var(--accent-blue);
+            color: white;
+            border-color: var(--accent-blue);
+        }
+        .customize-footer .btn-primary:hover { background: var(--accent-blue-hover); }
+        .customize-count {
+            font-size: 0.85em;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        /* ========== COMING SOON SECTION ========== */
+        .coming-soon-badge {
+            display: inline-block;
+            font-size: 0.75em;
+            font-weight: 500;
+            color: var(--accent-blue);
+            background: rgba(59,130,246,0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-top: 8px;
+        }
+
         /* ========== LOADING ========== */
         .loading {
             text-align: center;
@@ -691,6 +804,7 @@
         <button class="menu-item" onclick="toggleArchive(); closeMenu();"><span>Archive</span></button>
         <button class="menu-item" onclick="showFavorites(); closeMenu();"><span>Favorites</span></button>
         <button class="menu-item" onclick="showNotificationSettings(); closeMenu();"><span>Notifications</span></button>
+        <button class="menu-item" onclick="showCustomizeModal(); closeMenu();"><span>Customize</span></button>
         <div class="menu-divider"></div>
         <button class="menu-item" id="menuDarkModeToggle" onclick="toggleDarkMode()"><span id="menuDarkModeText">Dark Mode</span></button>
     </div>
@@ -756,6 +870,21 @@
         </div>
         <div class="modal-body">
             <div class="favorites-grid" id="favoritesGrid"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Customize Modal -->
+<div class="modal-overlay" id="customizeModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3>Customize Feed</h3>
+            <button class="modal-close" onclick="closeCustomizeModal()">×</button>
+        </div>
+        <div class="modal-body" id="customizeBody" style="padding: 16px 24px;"></div>
+        <div class="customize-footer">
+            <div class="customize-count" id="customizeCount"></div>
+            <button class="btn-primary" onclick="closeCustomizeModal()">Done</button>
         </div>
     </div>
 </div>
@@ -826,8 +955,71 @@
     const CACHE_PREFIX = 'dailyMuse_content_';
     const STORAGE_KEYS = {
         DARK_MODE: 'dailyMuse_darkMode',
-        FAVORITES: 'dailyMuse_favorites'
+        FAVORITES: 'dailyMuse_favorites',
+        CATEGORIES: 'dailyMuse_categories'
     };
+
+    // ========================================
+    // CATEGORY CONFIGURATION
+    // ========================================
+    const ALL_CATEGORIES = [
+        // Group: Core (default ON)
+        { key: 'music',        title: 'Classical Music',      emoji: '🎵', group: 'core', defaultOn: true },
+        { key: 'painting',     title: 'Visual Art',           emoji: '🎨', group: 'core', defaultOn: true },
+        { key: 'poem',         title: 'Poetry',               emoji: '📝', group: 'core', defaultOn: true },
+        { key: 'sculpture',    title: 'Sculpture',            emoji: '🗿', group: 'core', defaultOn: true },
+        { key: 'photography',  title: 'Photography',          emoji: '📷', group: 'core', defaultOn: true },
+        { key: 'architecture', title: 'Architecture',         emoji: '🏛️', group: 'core', defaultOn: true },
+        { key: 'quote',        title: 'Daily Inspiration',    emoji: '💡', group: 'core', defaultOn: true },
+        // Group: More Arts
+        { key: 'film',         title: 'Film',                 emoji: '🎬', group: 'arts', defaultOn: false },
+        { key: 'theater',      title: 'Theater / Broadway',   emoji: '🎭', group: 'arts', defaultOn: false },
+        { key: 'dance',        title: 'Dance',                emoji: '💃', group: 'arts', defaultOn: false },
+        { key: 'opera',        title: 'Opera',                emoji: '🎤', group: 'arts', defaultOn: false },
+        { key: 'jazz',         title: 'Jazz',                 emoji: '🎷', group: 'arts', defaultOn: false },
+        // Group: Words & Ideas
+        { key: 'philosophy',   title: 'Philosophy',           emoji: '🤔', group: 'words', defaultOn: false },
+        { key: 'literature',   title: 'Literature',           emoji: '📚', group: 'words', defaultOn: false },
+        // Group: Science & Wonder
+        { key: 'astronomy',    title: 'Astronomy',            emoji: '🔭', group: 'science', defaultOn: false },
+        { key: 'nature',       title: 'Natural Wonders',      emoji: '🌋', group: 'science', defaultOn: false },
+        // Group: Culture & History
+        { key: 'fashion',      title: 'Fashion',              emoji: '👗', group: 'culture', defaultOn: false },
+        { key: 'culinary',     title: 'Culinary Arts',        emoji: '🍽️', group: 'culture', defaultOn: false },
+        { key: 'history',      title: 'This Day in History',  emoji: '📅', group: 'culture', defaultOn: false },
+        { key: 'mythology',    title: 'Mythology',            emoji: '⚡', group: 'culture', defaultOn: false },
+    ];
+
+    const CATEGORY_GROUPS = {
+        core:    'Your Feed',
+        arts:    'Performing Arts',
+        words:   'Words & Ideas',
+        science: 'Science & Wonder',
+        culture: 'Culture & History'
+    };
+
+    // Categories that have content in the data
+    const CONTENT_READY_KEYS = ['music', 'painting', 'poem', 'sculpture', 'photography', 'architecture', 'astronomy', 'quote'];
+
+    function getEnabledCategories() {
+        const saved = localStorage.getItem(STORAGE_KEYS.CATEGORIES);
+        if (saved) {
+            try { return JSON.parse(saved); }
+            catch(e) { /* fall through */ }
+        }
+        // Default: core categories on, rest off
+        const defaults = {};
+        ALL_CATEGORIES.forEach(c => { defaults[c.key] = c.defaultOn; });
+        return defaults;
+    }
+
+    function saveEnabledCategories(cats) {
+        localStorage.setItem(STORAGE_KEYS.CATEGORIES, JSON.stringify(cats));
+    }
+
+    function isCategoryEnabled(key) {
+        return getEnabledCategories()[key] !== false;
+    }
 
     // iOS Share Icon SVG
     const IOS_SHARE_ICON = `<svg viewBox="0 0 24 24"><path d="M12 3l0 13"/><path d="M8 7l4-4 4 4"/><path d="M6 11v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-8"/></svg>`;
@@ -843,7 +1035,8 @@
         "2026-02-07": {"music":{"piece":"Canon in D","composer":"Johann Pachelbel","year":1680,"spotifyQuery":"Pachelbel Canon in D","wiki":"https://en.wikipedia.org/wiki/Johann_Pachelbel"},"painting":{"title":"The Birth of Venus","artist":"Sandro Botticelli","year":1485,"description":"The goddess Venus emerges from the sea as a fully grown woman — a celebration of beauty and the Italian Renaissance.","url":"https://www.uffizi.it/en/artworks/birth-of-venus","wiki":"https://en.wikipedia.org/wiki/Sandro_Botticelli","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg/300px-Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg"},"poem":{"title":"If—","author":"Rudyard Kipling","text":"If you can keep your head when all about you\nAre losing theirs and blaming it on you,\nIf you can trust yourself when all men doubt you,\nBut make allowance for their doubting too;","url":"https://www.poetryfoundation.org/poems/46473/if---","wiki":"https://en.wikipedia.org/wiki/Rudyard_Kipling"},"sculpture":{"title":"Pietà","artist":"Michelangelo","year":1499,"description":"Mary cradles the body of Jesus. Carved from a single block of Carrara marble when Michelangelo was just 24.","url":"https://www.vatican.va/various/basiliche/san_pietro/index_en.htm","wiki":"https://en.wikipedia.org/wiki/Michelangelo","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Michelangelo%27s_Pieta_5450_cut_out_black.jpg/220px-Michelangelo%27s_Pieta_5450_cut_out_black.jpg"},"photography":{"title":"Tank Man","artist":"Jeff Widener","year":1989,"description":"A lone man stands before a column of tanks near Tiananmen Square — an enduring symbol of individual courage.","url":"https://www.apimages.com/","wiki":"https://en.wikipedia.org/wiki/Jeff_Widener","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Tiananmen_Square%2C_Beijing%2C_China_1988_%281%29.jpg/300px-Tiananmen_Square%2C_Beijing%2C_China_1988_%281%29.jpg"},"architecture":{"name":"Casa Batlló","architect":"Antoni Gaudí","year":1906,"location":"Barcelona, Spain","description":"A building where nothing is straight — skeletal balconies, dragon-scale roof, and flowing stone facade.","url":"https://www.casabatllo.es/en/","wiki":"https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Casa_Batllo_Overview_Barcelona_Spain_cut.jpg/220px-Casa_Batllo_Overview_Barcelona_Spain_cut.jpg"},"astronomy":{"title":"Sombrero Galaxy","description":"A stunning spiral galaxy with a bright white core surrounded by a dramatic dust lane, 31 million light-years away.","credit":"NASA/ESA and The Hubble Heritage Team","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/M104_ngc4594_sombrero_galaxy_hi-res.jpg/300px-M104_ngc4594_sombrero_galaxy_hi-res.jpg"},"quote":{"text":"I dream my painting and I paint my dream.","author":"Vincent van Gogh"}},
         "2026-02-08": {"music":{"piece":"Ride of the Valkyries","composer":"Richard Wagner","year":1870,"spotifyQuery":"Wagner Ride of the Valkyries","wiki":"https://en.wikipedia.org/wiki/Richard_Wagner"},"painting":{"title":"A Sunday on La Grande Jatte","artist":"Georges Seurat","year":1886,"description":"Composed of millions of tiny dots of color, Seurat's pointillist masterpiece depicts Parisians relaxing by the Seine.","url":"https://www.artic.edu/artworks/27992/a-sunday-on-la-grande-jatte-1884","wiki":"https://en.wikipedia.org/wiki/Georges_Seurat","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/A_Sunday_on_La_Grande_Jatte%2C_Georges_Seurat%2C_1884.jpg/300px-A_Sunday_on_La_Grande_Jatte%2C_Georges_Seurat%2C_1884.jpg"},"poem":{"title":"I Wandered Lonely as a Cloud","author":"William Wordsworth","text":"I wandered lonely as a cloud\nThat floats on high o'er vales and hills,\nWhen all at once I saw a crowd,\nA host, of golden daffodils.","url":"https://www.poetryfoundation.org/poems/45521/i-wandered-lonely-as-a-cloud","wiki":"https://en.wikipedia.org/wiki/William_Wordsworth"},"sculpture":{"title":"The Kiss","artist":"Auguste Rodin","year":1882,"description":"Two lovers locked in an eternal embrace, carved from a single block of marble.","url":"https://www.musee-rodin.fr/en/museum/collection/kiss","wiki":"https://en.wikipedia.org/wiki/Auguste_Rodin","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Rodin_-_The_Kiss_-_2630961332.jpg/220px-Rodin_-_The_Kiss_-_2630961332.jpg"},"photography":{"title":"Raising the Flag on Iwo Jima","artist":"Joe Rosenthal","year":1945,"description":"Six Marines raise the American flag on Mount Suribachi. One of the most reproduced photographs in history.","url":"https://www.archives.gov/","wiki":"https://en.wikipedia.org/wiki/Joe_Rosenthal","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/USMC_War_Memorial_Night.jpg/300px-USMC_War_Memorial_Night.jpg"},"architecture":{"name":"Farnsworth House","architect":"Ludwig Mies van der Rohe","year":1951,"location":"Plano, Illinois","description":"A glass and steel pavilion — the purest expression of 'less is more' philosophy.","url":"https://farnsworthhouse.org/","wiki":"https://en.wikipedia.org/wiki/Ludwig_Mies_van_der_Rohe","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Farnsworth_House_by_Mies_Van_Der_Rohe_-_exterior-8.jpg/300px-Farnsworth_House_by_Mies_Van_Der_Rohe_-_exterior-8.jpg"},"astronomy":{"title":"Orion Nebula","description":"Visible to the naked eye in Orion's sword, this stellar nursery is 1,344 light-years away.","credit":"NASA, ESA, M. Robberto","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Orion_Nebula_-_Hubble_2006_mosaic_18000.jpg/300px-Orion_Nebula_-_Hubble_2006_mosaic_18000.jpg"},"quote":{"text":"Art enables us to find ourselves and lose ourselves at the same time.","author":"Thomas Merton"}},
         "2026-02-09": {"music":{"piece":"Nocturne in E-flat major, Op. 9 No. 2","composer":"Frédéric Chopin","year":1832,"spotifyQuery":"Chopin Nocturne Op 9 No 2","wiki":"https://en.wikipedia.org/wiki/Fr%C3%A9d%C3%A9ric_Chopin"},"painting":{"title":"The Scream","artist":"Edvard Munch","year":1893,"description":"A figure on a bridge clutches its face in anguish under a blood-red sky — an icon of modern anxiety.","url":"https://www.nasjonalmuseet.no/en/collection/object/NG.M.00939","wiki":"https://en.wikipedia.org/wiki/Edvard_Munch","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Edvard_Munch%2C_1893%2C_The_Scream%2C_oil%2C_tempera_and_pastel_on_cardboard%2C_91_x_73_cm%2C_National_Gallery_of_Norway.jpg/220px-Edvard_Munch%2C_1893%2C_The_Scream%2C_oil%2C_tempera_and_pastel_on_cardboard%2C_91_x_73_cm%2C_National_Gallery_of_Norway.jpg"},"poem":{"title":"Phenomenal Woman","author":"Maya Angelou","text":"Pretty women wonder where my secret lies.\nI'm not cute or built to suit a fashion model's size\nBut when I start to tell them,\nThey think I'm telling lies.","url":"https://www.poetryfoundation.org/poems/48985/phenomenal-woman","wiki":"https://en.wikipedia.org/wiki/Maya_Angelou"},"sculpture":{"title":"Cloud Gate","artist":"Anish Kapoor","year":2006,"description":"Affectionately known as 'The Bean,' this 110-ton polished steel sculpture reflects and distorts the Chicago skyline.","url":"https://millenniumpark.org/","wiki":"https://en.wikipedia.org/wiki/Anish_Kapoor","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Lightmatter_chinatown_3.jpg/300px-Lightmatter_chinatown_3.jpg"},"photography":{"title":"Bliss","artist":"Charles O'Rear","year":1996,"description":"Rolling green hills under a blue sky. Became the most viewed photograph in history as the Windows XP wallpaper.","url":"https://www.nationalgeographic.com/","wiki":"https://en.wikipedia.org/wiki/Charles_O%27Rear","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Napa_Valley_-_Pair_of_Red_Tailed_Hawks.jpg/300px-Napa_Valley_-_Pair_of_Red_Tailed_Hawks.jpg"},"architecture":{"name":"Lotus Temple","architect":"Fariborz Sahba","year":1986,"location":"New Delhi, India","description":"Shaped like a half-open lotus flower with 27 marble-clad petals, welcoming people of all faiths.","url":"https://www.bahaihouseofworship.in/","wiki":"https://en.wikipedia.org/wiki/Fariborz_Sahba","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/LotusDelhi.jpg/300px-LotusDelhi.jpg"},"astronomy":{"title":"Milky Way over Yellowstone","description":"Our home galaxy arcs above Grand Prismatic Spring, creating a spectacular union of terrestrial and celestial beauty.","credit":"Dave Lane","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/ESO-VLT-Laser-phot-33a-07.jpg/300px-ESO-VLT-Laser-phot-33a-07.jpg"},"quote":{"text":"The Earth has music for those who listen.","author":"William Shakespeare"}},
-        "2026-02-10": {"music":{"piece":"November Steps","composer":"Tōru Takemitsu","year":1967,"spotifyQuery":"Takemitsu November Steps","wiki":"https://en.wikipedia.org/wiki/T%C5%8Dru_Takemitsu"},"painting":{"title":"The Dance Class","artist":"Edgar Degas","year":1874,"description":"A masterful glimpse into a Parisian ballet studio capturing young dancers in rehearsal.","url":"https://www.metmuseum.org/art/collection/search/438817","wiki":"https://en.wikipedia.org/wiki/Edgar_Degas","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Edgar_Degas_-_The_Ballet_Class_-_Google_Art_Project.jpg/300px-Edgar_Degas_-_The_Ballet_Class_-_Google_Art_Project.jpg"},"poem":{"title":"The Guest House","author":"Rumi","text":"This being human is a guest house.\nEvery morning a new arrival.\nA joy, a depression, a meanness,\nsome momentary awareness comes\nas an unexpected visitor.","url":"https://www.poetryfoundation.org/poems/46652/the-guest-house","wiki":"https://en.wikipedia.org/wiki/Rumi"},"sculpture":{"title":"The Burghers of Calais","artist":"Auguste Rodin","year":1889,"description":"A monumental bronze commemorating six citizens who offered their lives to save their city.","url":"https://www.musee-rodin.fr/en/museum/collection/burghers-calais","wiki":"https://en.wikipedia.org/wiki/Auguste_Rodin","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Calais_burghers.jpg/300px-Calais_burghers.jpg"},"photography":{"title":"Migrant Mother","artist":"Dorothea Lange","year":1936,"description":"An iconic Depression-era photograph that became a symbol of resilience and dignity amid poverty.","url":"https://www.loc.gov/pictures/item/2017762891/","wiki":"https://en.wikipedia.org/wiki/Dorothea_Lange","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Lange-MigrantMother02.jpg/250px-Lange-MigrantMother02.jpg"},"architecture":{"name":"Gando School Library","architect":"Francis Kéré","year":2008,"location":"Gando, Burkina Faso","description":"A groundbreaking library using local materials and innovative climate control.","url":"https://www.archdaily.com/648024/school-library-gando-kere-architecture","wiki":"https://en.wikipedia.org/wiki/Francis_K%C3%A9r%C3%A9","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Gando_school_library.jpg/300px-Gando_school_library.jpg"},"astronomy":{"title":"Aurora over Norway","description":"On the third night of returning to the same peaks, the sky lit up with a spectacular auroral display.","credit":"Max Rive","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Aurora_near_Abisko%2C_Sweden.jpg/300px-Aurora_near_Abisko%2C_Sweden.jpg"},"quote":{"text":"The creative adult is the child who survived.","author":"Ursula K. Le Guin"}}
+        "2026-02-10": {"music":{"piece":"November Steps","composer":"Tōru Takemitsu","year":1967,"spotifyQuery":"Takemitsu November Steps","wiki":"https://en.wikipedia.org/wiki/T%C5%8Dru_Takemitsu"},"painting":{"title":"The Dance Class","artist":"Edgar Degas","year":1874,"description":"A masterful glimpse into a Parisian ballet studio capturing young dancers in rehearsal.","url":"https://www.metmuseum.org/art/collection/search/438817","wiki":"https://en.wikipedia.org/wiki/Edgar_Degas","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Edgar_Degas_-_The_Ballet_Class_-_Google_Art_Project.jpg/300px-Edgar_Degas_-_The_Ballet_Class_-_Google_Art_Project.jpg"},"poem":{"title":"The Guest House","author":"Rumi","text":"This being human is a guest house.\nEvery morning a new arrival.\nA joy, a depression, a meanness,\nsome momentary awareness comes\nas an unexpected visitor.","url":"https://www.poetryfoundation.org/poems/46652/the-guest-house","wiki":"https://en.wikipedia.org/wiki/Rumi"},"sculpture":{"title":"The Burghers of Calais","artist":"Auguste Rodin","year":1889,"description":"A monumental bronze commemorating six citizens who offered their lives to save their city.","url":"https://www.musee-rodin.fr/en/museum/collection/burghers-calais","wiki":"https://en.wikipedia.org/wiki/Auguste_Rodin","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Calais_burghers.jpg/300px-Calais_burghers.jpg"},"photography":{"title":"Migrant Mother","artist":"Dorothea Lange","year":1936,"description":"An iconic Depression-era photograph that became a symbol of resilience and dignity amid poverty.","url":"https://www.loc.gov/pictures/item/2017762891/","wiki":"https://en.wikipedia.org/wiki/Dorothea_Lange","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Lange-MigrantMother02.jpg/250px-Lange-MigrantMother02.jpg"},"architecture":{"name":"Gando School Library","architect":"Francis Kéré","year":2008,"location":"Gando, Burkina Faso","description":"A groundbreaking library using local materials and innovative climate control.","url":"https://www.archdaily.com/648024/school-library-gando-kere-architecture","wiki":"https://en.wikipedia.org/wiki/Francis_K%C3%A9r%C3%A9","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Gando_school_library.jpg/300px-Gando_school_library.jpg"},"astronomy":{"title":"Aurora over Norway","description":"On the third night of returning to the same peaks, the sky lit up with a spectacular auroral display.","credit":"Max Rive","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Aurora_near_Abisko%2C_Sweden.jpg/300px-Aurora_near_Abisko%2C_Sweden.jpg"},"quote":{"text":"The creative adult is the child who survived.","author":"Ursula K. Le Guin"}},
+        "2026-02-11": {"music":{"piece":"Prelude in C-sharp minor, Op. 3 No. 2","composer":"Sergei Rachmaninoff","year":1892,"spotifyQuery":"Rachmaninoff Prelude C sharp minor Op 3","wiki":"https://en.wikipedia.org/wiki/Sergei_Rachmaninoff"},"painting":{"title":"Impression, Sunrise","artist":"Claude Monet","year":1872,"description":"The painting that gave Impressionism its name \u2014 a hazy harbor at Le Havre rendered in loose, luminous brushstrokes that scandalized the art world.","url":"https://www.marmottan.fr/en/notice/4014/","wiki":"https://en.wikipedia.org/wiki/Claude_Monet","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Monet_-_Impression%2C_Sunrise.jpg/300px-Monet_-_Impression%2C_Sunrise.jpg"},"poem":{"title":"Ode to a Nightingale","author":"John Keats","text":"My heart aches, and a drowsy numbness pains\nMy sense, as though of hemlock I had drunk,\nOr emptied some dull opiate to the drains\nOne minute past, and Lethe-wards had sunk.","url":"https://www.poetryfoundation.org/poems/44479/ode-to-a-nightingale","wiki":"https://en.wikipedia.org/wiki/John_Keats"},"sculpture":{"title":"The Gates of Hell","artist":"Auguste Rodin","year":1917,"description":"A monumental bronze doorway populated by over 180 writhing figures inspired by Dante's Inferno. The Thinker sits at its crown.","url":"https://www.musee-rodin.fr/en/museum/collection/gates-hell","wiki":"https://en.wikipedia.org/wiki/Auguste_Rodin","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Rodin_Gates_of_Hell.jpg/220px-Rodin_Gates_of_Hell.jpg"},"photography":{"title":"The Steerage","artist":"Alfred Stieglitz","year":1907,"description":"Passengers divided by class on a transatlantic liner \u2014 Stieglitz called it his finest photograph, a turning point in art photography.","url":"https://www.moma.org/collection/works/47238","wiki":"https://en.wikipedia.org/wiki/Alfred_Stieglitz","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/The_Steerage_1907_Stieglitz.jpg/220px-The_Steerage_1907_Stieglitz.jpg"},"architecture":{"name":"Hagia Sophia","architect":"Isidore of Miletus & Anthemius of Tralles","year":537,"location":"Istanbul, Turkey","description":"For nearly a thousand years the world's largest cathedral, its vast dome seems to float on a ring of light \u2014 an engineering marvel of the ancient world.","url":"https://muze.gen.tr/muze-detay/ayasofya","wiki":"https://en.wikipedia.org/wiki/Hagia_Sophia","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Hagia_Sophia_Mars_2013.jpg/300px-Hagia_Sophia_Mars_2013.jpg"},"astronomy":{"title":"The Eagle Nebula","description":"Home to the famous Pillars of Creation, this vast cloud of gas and dust is a stellar nursery 7,000 light-years away in the constellation Serpens.","credit":"NASA, ESA, and the Hubble Heritage Team","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Eagle_Nebula_from_ESO.jpg/300px-Eagle_Nebula_from_ESO.jpg"},"quote":{"text":"We don't see things as they are, we see them as we are.","author":"Ana\u00efs Nin"},"film":{"title":"Rear Window","director":"Alfred Hitchcock","year":1954,"description":"A wheelchair-bound photographer spies on his neighbors and becomes convinced one of them has committed murder. Hitchcock's masterclass in suspense built entirely from a single apartment.","url":"https://www.imdb.com/title/tt0047396/","wiki":"https://en.wikipedia.org/wiki/Alfred_Hitchcock"},"theater":{"title":"Death of a Salesman","playwright":"Arthur Miller","year":1949,"description":"Willy Loman's tragic unraveling as he confronts the gap between the American Dream and his own life. One of the most performed plays in history.","url":"https://www.arthurMillerFoundation.org","wiki":"https://en.wikipedia.org/wiki/Arthur_Miller"},"dance":{"title":"Swan Lake","choreographer":"Marius Petipa & Lev Ivanov","year":1895,"description":"The definitive classical ballet \u2014 Odette's transformation from swan to woman and back demands extraordinary technical and emotional range from its lead dancer.","composer":"Pyotr Ilyich Tchaikovsky","wiki":"https://en.wikipedia.org/wiki/Swan_Lake"},"opera":{"title":"La Boh\u00e8me","composer":"Giacomo Puccini","year":1896,"description":"Young artists in a freezing Parisian garret, love and tuberculosis, and one of the most heartbreaking final scenes ever written for the stage.","url":"https://www.metopera.org/","wiki":"https://en.wikipedia.org/wiki/Giacomo_Puccini"},"jazz":{"title":"So What","artist":"Miles Davis","year":1959,"album":"Kind of Blue","description":"The opening track of the best-selling jazz album of all time. Davis stripped jazz down to two chords and let the melody breathe, launching the modal jazz revolution.","spotifyQuery":"Miles Davis So What Kind of Blue","wiki":"https://en.wikipedia.org/wiki/Miles_Davis"},"philosophy":{"title":"The Allegory of the Cave","thinker":"Plato","year":-380,"description":"Prisoners chained in a cave mistake shadows on the wall for reality. When one escapes into sunlight, he sees the world as it truly is \u2014 but can never convince the others.","question":"How much of what you believe is real is actually just shadows?","wiki":"https://en.wikipedia.org/wiki/Plato"},"literature":{"title":"One Hundred Years of Solitude","author":"Gabriel Garc\u00eda M\u00e1rquez","year":1967,"description":"Seven generations of the Buend\u00eda family in the mythical town of Macondo. The novel that brought magical realism to the world and won Garc\u00eda M\u00e1rquez the Nobel Prize.","openingLine":"Many years later, as he faced the firing squad, Colonel Aureliano Buend\u00eda was to remember that distant afternoon when his father took him to discover ice.","wiki":"https://en.wikipedia.org/wiki/Gabriel_Garc%C3%ADa_M%C3%A1rquez"},"nature":{"title":"The Grand Prismatic Spring","location":"Yellowstone National Park, Wyoming","description":"The largest hot spring in the United States \u2014 its vivid rings of orange, yellow, and green are created by heat-loving bacteria thriving at different temperatures.","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Grand_Prismatic_Spring_and_Midway_Geyser_Basin_from_above.jpg/300px-Grand_Prismatic_Spring_and_Midway_Geyser_Basin_from_above.jpg","wiki":"https://en.wikipedia.org/wiki/Grand_Prismatic_Spring"},"fashion":{"title":"The Little Black Dress","designer":"Coco Chanel","year":1926,"description":"When Vogue published Chanel's simple black sheath dress, they called it 'the Ford of fashion' \u2014 accessible, universal, and destined to endure. It redefined elegance as simplicity.","wiki":"https://en.wikipedia.org/wiki/Coco_Chanel"},"culinary":{"title":"Neapolitan Margherita Pizza","origin":"Naples, Italy","year":1889,"description":"Legend says pizzaiolo Raffaele Esposito created this pizza for Queen Margherita using tomato, mozzarella, and basil to mirror the Italian flag. Simple perfection that conquered the world.","wiki":"https://en.wikipedia.org/wiki/Pizza_Margherita"},"history":{"title":"Nelson Mandela Released from Prison","year":1990,"date":"February 11, 1990","description":"After 27 years of imprisonment, Nelson Mandela walked free from Victor Verster Prison. The moment electrified the world and set South Africa on the path from apartheid to democracy.","wiki":"https://en.wikipedia.org/wiki/Nelson_Mandela"},"mythology":{"title":"Prometheus and the Gift of Fire","tradition":"Greek","description":"The Titan Prometheus stole fire from Mount Olympus and gave it to humanity, granting civilization itself. Zeus punished him by chaining him to a rock where an eagle devoured his liver each day, only for it to regrow each night.","theme":"The cost of defying power to uplift others","wiki":"https://en.wikipedia.org/wiki/Prometheus"}}
     };
 
     // ========================================
@@ -1075,21 +1268,32 @@
         window._currentContent = content;
         window._currentDate = date;
 
-        const sections = [
-            { type: 'music', title: 'Classical Music', data: content.music },
-            { type: 'painting', title: 'Visual Art', data: content.painting },
-            { type: 'poem', title: 'Poetry', data: content.poem },
-            { type: 'sculpture', title: 'Sculpture', data: content.sculpture },
-            { type: 'photography', title: 'Photography', data: content.photography },
-            { type: 'architecture', title: 'Architecture', data: content.architecture },
-            { type: 'astronomy', title: 'Astronomy', data: content.astronomy },
-            { type: 'quote', title: 'The Examined Life', data: content.quote }
-        ];
+        const enabledCats = getEnabledCategories();
+
+        const SECTION_TITLES = {
+            music: 'Classical Music', painting: 'Visual Art', poem: 'Poetry',
+            sculpture: 'Sculpture', photography: 'Photography', architecture: 'Architecture',
+            astronomy: 'Astronomy', quote: 'The Examined Life', film: 'Film',
+            theater: 'Theater / Broadway', dance: 'Dance', opera: 'Opera', jazz: 'Jazz',
+            philosophy: 'Philosophy', literature: 'Literature', nature: 'Natural Wonders',
+            fashion: 'Fashion', culinary: 'Culinary Arts', history: 'This Day in History',
+            mythology: 'Mythology'
+        };
 
         main.innerHTML = '';
-        sections.forEach(({ type, title, data }) => {
+        ALL_CATEGORIES.forEach(cat => {
+            if (enabledCats[cat.key] === false) return;
+            const data = content[cat.key];
             if (data) {
-                const section = createSection(type, title, data, date);
+                const section = createSection(cat.key, SECTION_TITLES[cat.key] || cat.title, data, date);
+                main.appendChild(section);
+            } else {
+                const section = document.createElement('div');
+                section.className = 'content-section';
+                section.innerHTML = `
+                    <h2>${SECTION_TITLES[cat.key] || cat.title}</h2>
+                    <p style="color: var(--text-secondary); margin-top: 8px;">Content for this category is coming soon.</p>
+                    <span class="coming-soon-badge">Coming Soon</span>`;
                 main.appendChild(section);
             }
         });
@@ -1100,7 +1304,7 @@
         const section = document.createElement('div');
         section.className = 'content-section';
         const dateStr = date.toISOString();
-        const artistName = item.artist || item.author || item.composer || item.architect || item.photographer || item.credit || '';
+        const artistName = item.artist || item.author || item.composer || item.architect || item.photographer || item.credit || item.director || item.playwright || item.choreographer || item.thinker || item.designer || item.tradition || '';
         const itemTitle = item.title || item.piece || item.name || (item.text ? item.text.substring(0, 30) + '...' : '');
 
         section.innerHTML = `
@@ -1181,6 +1385,116 @@
                 return `
                     <div class="poem-text">"${item.text}"</div>
                     <p style="text-align: right; margin-top: 10px; color: var(--text-secondary); font-style: italic;">— ${item.author}</p>`;
+            case 'film':
+                return `
+                    <p><strong>${item.title}</strong></p>
+                    <p>Directed by ${item.director} (${item.year})</p>
+                    <p style="margin-top: 12px;">${item.description}</p>
+                    <div class="button-group">
+                        <a href="${item.url}" target="_blank" rel="noopener" class="spotify-link">View on IMDb</a>
+                        <a href="${item.wiki}" target="_blank" rel="noopener" class="learn-more-link">Learn more</a>
+                    </div>`;
+            case 'theater':
+                return `
+                    <p><strong>${item.title}</strong></p>
+                    <p>By ${item.playwright} (${item.year})</p>
+                    <p style="margin-top: 12px;">${item.description}</p>
+                    <div class="button-group">
+                        ${item.url ? `<a href="${item.url}" target="_blank" rel="noopener" class="spotify-link">Learn More</a>` : ''}
+                        <a href="${item.wiki}" target="_blank" rel="noopener" class="learn-more-link">About the playwright</a>
+                    </div>`;
+            case 'dance':
+                return `
+                    <p><strong>${item.title}</strong></p>
+                    <p>Choreography by ${item.choreographer} (${item.year})</p>
+                    ${item.composer ? `<p style="margin-top: 4px; color: var(--text-secondary);">Music by ${item.composer}</p>` : ''}
+                    <p style="margin-top: 12px;">${item.description}</p>
+                    <div class="button-group">
+                        <a href="${item.wiki}" target="_blank" rel="noopener" class="spotify-link">Learn more</a>
+                    </div>`;
+            case 'opera':
+                return `
+                    <p><strong>${item.title}</strong></p>
+                    <p>By ${item.composer} (${item.year})</p>
+                    <p style="margin-top: 12px;">${item.description}</p>
+                    <div class="button-group">
+                        ${item.url ? `<a href="${item.url}" target="_blank" rel="noopener" class="spotify-link">Explore</a>` : ''}
+                        <a href="${item.wiki}" target="_blank" rel="noopener" class="learn-more-link">Learn more</a>
+                    </div>`;
+            case 'jazz': {
+                const jazzSpotify = `https://open.spotify.com/search/${encodeURIComponent(item.spotifyQuery || item.title)}`;
+                return `
+                    <p><strong>${item.title}</strong></p>
+                    <p>By ${item.artist} (${item.year})</p>
+                    ${item.album ? `<p style="margin-top: 4px; color: var(--text-secondary);">From <em>${item.album}</em></p>` : ''}
+                    <p style="margin-top: 12px;">${item.description}</p>
+                    <div class="button-group">
+                        <a href="${jazzSpotify}" target="_blank" rel="noopener" class="spotify-link">Listen on Spotify</a>
+                        <a href="${item.wiki}" target="_blank" rel="noopener" class="learn-more-link">Learn more</a>
+                    </div>`;
+            }
+            case 'philosophy':
+                return `
+                    <p><strong>${item.title}</strong></p>
+                    <p>${item.thinker} (${item.year < 0 ? Math.abs(item.year) + ' BC' : item.year})</p>
+                    <p style="margin-top: 12px;">${item.description}</p>
+                    ${item.question ? `<div class="poem-text" style="border-left-color: var(--accent-blue);">${item.question}</div>` : ''}
+                    <div class="button-group">
+                        <a href="${item.wiki}" target="_blank" rel="noopener" class="spotify-link">Learn more</a>
+                    </div>`;
+            case 'literature':
+                return `
+                    <p><strong>${item.title}</strong></p>
+                    <p>By ${item.author} (${item.year})</p>
+                    <p style="margin-top: 12px;">${item.description}</p>
+                    ${item.openingLine ? `<div class="poem-text">"${item.openingLine}"</div>` : ''}
+                    <div class="button-group">
+                        <a href="${item.wiki}" target="_blank" rel="noopener" class="spotify-link">About the author</a>
+                    </div>`;
+            case 'nature': {
+                const natImg = item.image ? `<img src="${item.image}" alt="${item.title}" class="content-image" style="max-width: 400px;" onerror="this.classList.add('error')">` : '';
+                return `
+                    ${natImg}
+                    <p><strong>${item.title}</strong></p>
+                    <p style="margin-top: 4px; color: var(--text-secondary);">${item.location || ''}</p>
+                    <p style="margin-top: 12px;">${item.description}</p>
+                    <div class="button-group">
+                        <a href="${item.wiki}" target="_blank" rel="noopener" class="spotify-link">Learn more</a>
+                    </div>`;
+            }
+            case 'fashion':
+                return `
+                    <p><strong>${item.title}</strong></p>
+                    <p>${item.designer} (${item.year})</p>
+                    <p style="margin-top: 12px;">${item.description}</p>
+                    <div class="button-group">
+                        <a href="${item.wiki}" target="_blank" rel="noopener" class="spotify-link">Learn more</a>
+                    </div>`;
+            case 'culinary':
+                return `
+                    <p><strong>${item.title}</strong></p>
+                    <p style="color: var(--text-secondary);">${item.origin}${item.year ? ' · ' + item.year : ''}</p>
+                    <p style="margin-top: 12px;">${item.description}</p>
+                    <div class="button-group">
+                        <a href="${item.wiki}" target="_blank" rel="noopener" class="spotify-link">Learn more</a>
+                    </div>`;
+            case 'history':
+                return `
+                    <p><strong>${item.title}</strong></p>
+                    <p style="color: var(--text-secondary);">${item.date || item.year}</p>
+                    <p style="margin-top: 12px;">${item.description}</p>
+                    <div class="button-group">
+                        <a href="${item.wiki}" target="_blank" rel="noopener" class="spotify-link">Learn more</a>
+                    </div>`;
+            case 'mythology':
+                return `
+                    <p><strong>${item.title}</strong></p>
+                    <p style="color: var(--text-secondary);">${item.tradition} mythology</p>
+                    <p style="margin-top: 12px;">${item.description}</p>
+                    ${item.theme ? `<div class="poem-text" style="border-left-color: var(--accent-blue);">${item.theme}</div>` : ''}
+                    <div class="button-group">
+                        <a href="${item.wiki}" target="_blank" rel="noopener" class="spotify-link">Learn more</a>
+                    </div>`;
             default:
                 return '<p>Content coming soon...</p>';
         }
@@ -1355,6 +1669,63 @@
     // Auto-schedule on load if enabled
     if (localStorage.getItem(NOTIF_KEYS.ENABLED) === 'true' && 'Notification' in window && Notification.permission === 'granted') {
         scheduleNotification();
+    }
+
+    // ========================================
+    // CUSTOMIZE CATEGORIES
+    // ========================================
+    function showCustomizeModal() {
+        const body = document.getElementById('customizeBody');
+        const cats = getEnabledCategories();
+        let html = '';
+        let currentGroup = '';
+
+        ALL_CATEGORIES.forEach(cat => {
+            if (cat.group !== currentGroup) {
+                currentGroup = cat.group;
+                html += `<div class="customize-section-label">${CATEGORY_GROUPS[cat.group]}</div>`;
+            }
+            const checked = cats[cat.key] !== false ? 'checked' : '';
+            const isNew = !CONTENT_READY_KEYS.includes(cat.key);
+            const newTag = isNew ? '<span class="category-toggle-tag">NEW</span>' : '';
+            html += `
+                <div class="category-toggle">
+                    <div class="category-toggle-info">
+                        <span class="category-toggle-name">${cat.title}${newTag}</span>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" ${checked} onchange="toggleCategory('${cat.key}', this.checked)">
+                        <span class="toggle-track"></span>
+                        <span class="toggle-knob"></span>
+                    </label>
+                </div>`;
+        });
+
+        body.innerHTML = html;
+        updateCustomizeCount();
+        document.getElementById('customizeModal').classList.add('active');
+    }
+
+    function closeCustomizeModal() {
+        document.getElementById('customizeModal').classList.remove('active');
+        // Re-render current content with new preferences
+        if (window._currentDate) {
+            displayContent(window._currentDate);
+        }
+    }
+
+    function toggleCategory(key, enabled) {
+        const cats = getEnabledCategories();
+        cats[key] = enabled;
+        saveEnabledCategories(cats);
+        updateCustomizeCount();
+    }
+
+    function updateCustomizeCount() {
+        const cats = getEnabledCategories();
+        const count = Object.values(cats).filter(v => v).length;
+        const el = document.getElementById('customizeCount');
+        if (el) el.textContent = `${count} of ${ALL_CATEGORIES.length} active`;
     }
 
     // ========================================
