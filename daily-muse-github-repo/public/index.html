@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Daily Muse</title>
+    
+    <!-- PWA & iOS Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Daily Muse">
+    <meta name="theme-color" content="#111827">
+    <meta name="description" content="Your daily dose of culture - Classical music, visual art, poetry, sculpture, photography, architecture, astronomy, and daily inspiration.">
+    
+    <!-- App Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect fill='%23111827' width='180' height='180' rx='40'/%3E%3Ctext x='90' y='100' font-family='Arial, sans-serif' font-size='72' fill='white' text-anchor='middle' dominant-baseline='middle'%3E🎨%3C/text%3E%3C/svg%3E">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='80' font-size='80'%3E🎨%3C/text%3E%3C/svg%3E">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ========== CSS VARIABLES ========== */
+        :root {
+            --bg-primary: #f8f9fa;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f9fafb;
+            --text-primary: #1a1a1a;
+            --text-secondary: #6b7280;
+            --text-tertiary: #111827;
+            --border-color: #e5e7eb;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --accent-blue: #3B82F6;
+            --accent-blue-hover: #2563EB;
+            --accent-dark: #111827;
+            --accent-dark-hover: #374151;
+        }
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-tertiary: #e2e8f0;
+            --border-color: #334155;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+            --accent-blue: #3B82F6;
+            --accent-blue-hover: #60A5FA;
+            --accent-dark: #e2e8f0;
+            --accent-dark-hover: #cbd5e1;
+        }
+
+        /* ========== RESET & BASE ========== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 40px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* ========== HEADER ========== */
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px 0 30px;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+        .hamburger-btn {
+            position: absolute; left: 0; top: 40px;
+            background: transparent; border: none; cursor: pointer;
+            padding: 10px; display: flex; flex-direction: column; gap: 5px; z-index: 1001;
+        }
+        .hamburger-btn span {
+            display: block; width: 25px; height: 3px;
+            background: var(--text-primary); border-radius: 3px; transition: all 0.3s ease;
+        }
+        .hamburger-btn:hover span { background: var(--accent-blue); }
+        h1 { font-size: 2.5em; font-weight: 700; margin-bottom: 12px; color: var(--text-tertiary); letter-spacing: -0.02em; }
+        .date-display { font-size: 0.95em; color: var(--text-secondary); margin-bottom: 30px; font-weight: 400; }
+
+        /* ========== HAMBURGER MENU ========== */
+        .menu-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5); z-index: 1100; display: none; opacity: 0; transition: opacity 0.3s ease;
+        }
+        .menu-overlay.active { display: block; opacity: 1; }
+        .hamburger-menu {
+            position: fixed; top: 0; left: -300px; width: 280px; height: 100vh;
+            background: var(--bg-secondary); box-shadow: 2px 0 20px rgba(0,0,0,0.2);
+            z-index: 1101; transition: left 0.3s ease; overflow-y: auto;
+        }
+        .hamburger-menu.active { left: 0; }
+        .menu-header { display: flex; justify-content: space-between; align-items: center; padding: 24px 20px; border-bottom: 1px solid var(--border-color); }
+        .menu-header h2 { font-size: 1.3em; font-weight: 600; color: var(--text-tertiary); margin: 0; }
+        .menu-close {
+            background: transparent; border: none; color: var(--text-secondary); font-size: 1.8em;
+            cursor: pointer; width: 32px; height: 32px; border-radius: 6px;
+            display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
+        }
+        .menu-close:hover { background: var(--bg-tertiary); color: var(--text-primary); }
+        .menu-items { padding: 8px 0; }
+        .menu-item {
+            width: 100%; display: flex; align-items: center; padding: 16px 20px;
+            background: transparent; border: none; color: var(--text-primary);
+            font-size: 1em; font-weight: 500; cursor: pointer; transition: all 0.2s ease; text-align: left;
+        }
+        .menu-item:hover { background: var(--bg-tertiary); }
+        .menu-divider { height: 1px; background: var(--border-color); margin: 8px 20px; }
+
+        /* ========== CONTENT SECTIONS ========== */
+        .content-section {
+            background: var(--bg-secondary); padding: 32px; padding-bottom: 60px;
+            margin-bottom: 24px; border-radius: 12px; box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color); transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease-out forwards; opacity: 0; position: relative;
+        }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .content-section:nth-child(1) { animation-delay: 0.1s; }
+        .content-section:nth-child(2) { animation-delay: 0.2s; }
+        .content-section:nth-child(3) { animation-delay: 0.3s; }
+        .content-section:nth-child(4) { animation-delay: 0.4s; }
+        .content-section:nth-child(5) { animation-delay: 0.5s; }
+        .content-section:nth-child(6) { animation-delay: 0.6s; }
+        .content-section:nth-child(7) { animation-delay: 0.7s; }
+        .content-section:nth-child(8) { animation-delay: 0.8s; }
+        .content-section:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+        .content-section h2 { font-size: 1.25em; font-weight: 600; color: var(--text-tertiary); letter-spacing: -0.01em; margin: 0 0 16px 0; }
+        .section-actions { position: absolute; bottom: 16px; right: 16px; display: flex; gap: 8px; }
+        .favorite-btn, .share-btn {
+            background: transparent; border: 1px solid var(--border-color); color: var(--text-secondary);
+            width: 36px; height: 36px; border-radius: 6px; cursor: pointer; font-size: 1.1em;
+            display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
+        }
+        .favorite-btn:hover, .share-btn:hover { background: var(--bg-tertiary); transform: scale(1.1); }
+        .favorite-btn.active { background: #FCD34D; border-color: #FCD34D; color: #78350F; }
+
+        /* ========== IMAGE PREVIEWS ========== */
+        .content-image { width: 100%; max-width: 200px; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 16px; border: 1px solid var(--border-color); display: block; }
+        .content-image.error { display: none; }
+
+        /* ========== BUTTONS & LINKS ========== */
+        .spotify-link {
+            display: inline-block; margin-top: 16px; padding: 10px 20px;
+            background: var(--accent-blue); color: white; text-decoration: none;
+            border-radius: 8px; font-size: 0.875em; transition: all 0.2s ease; font-weight: 500;
+        }
+        .spotify-link:hover { background: var(--accent-blue-hover); transform: translateY(-2px) scale(1.02); box-shadow: 0 8px 16px rgba(59,130,246,0.3); }
+        .learn-more-link { display: inline-block; margin-left: 12px; color: var(--text-secondary); text-decoration: none; font-size: 0.875em; transition: all 0.2s ease; font-weight: 500; }
+        .learn-more-link:hover { color: var(--accent-blue); }
+        .button-group { margin-top: 16px; display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+
+        /* ========== POEM TEXT ========== */
+        .poem-text { font-style: italic; margin: 16px 0; padding: 20px; background: var(--bg-tertiary); border-left: 3px solid var(--accent-dark); white-space: pre-line; font-size: 0.95em; line-height: 1.7; color: var(--text-secondary); border-radius: 4px; }
+
+        /* ========== MODALS ========== */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+        .modal-overlay.active { display: flex; }
+        .modal { background: var(--bg-secondary); border-radius: 16px; max-width: 500px; width: 100%; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); animation: modalSlideIn 0.3s ease-out; }
+        @keyframes modalSlideIn { from { opacity: 0; transform: translateY(20px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        .modal-header { padding: 24px 24px 16px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .modal-header h3 { font-size: 1.3em; font-weight: 600; color: var(--text-tertiary); }
+        .modal-close { background: transparent; border: none; color: var(--text-secondary); font-size: 1.5em; cursor: pointer; width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
+        .modal-close:hover { background: var(--bg-tertiary); color: var(--text-primary); }
+        .modal-body { padding: 24px; }
+        .share-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .share-option { display: flex; align-items: center; gap: 12px; padding: 16px; border: 1px solid var(--border-color); border-radius: 8px; cursor: pointer; transition: all 0.2s ease; background: var(--bg-primary); }
+        .share-option:hover { background: var(--bg-tertiary); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+        .share-option span { font-size: 1.5em; }
+        .share-option div { font-size: 0.9em; font-weight: 500; color: var(--text-primary); }
+        .favorites-grid { display: grid; gap: 16px; }
+        .favorite-item { padding: 16px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-primary); display: flex; justify-content: space-between; align-items: center; }
+        .favorite-info h4 { font-size: 1em; font-weight: 600; color: var(--text-tertiary); margin-bottom: 4px; }
+        .favorite-info p { font-size: 0.85em; color: var(--text-secondary); }
+        .remove-favorite { background: transparent; border: 1px solid var(--border-color); color: var(--text-secondary); padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85em; transition: all 0.2s ease; }
+        .remove-favorite:hover { background: #FEE2E2; border-color: #EF4444; color: #991B1B; }
+        .empty-state { text-align: center; padding: 40px 20px; color: var(--text-secondary); }
+        .empty-state-icon { font-size: 3em; margin-bottom: 16px; }
+
+        /* ========== LOADING ========== */
+        .loading { text-align: center; padding: 60px 20px; }
+        .loading-spinner { width: 40px; height: 40px; border: 3px solid var(--border-color); border-top-color: var(--accent-blue); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 16px; }
+        
+        /* Skeleton Loading */
+        .skeleton-card { background: var(--bg-secondary); border-radius: 12px; padding: 28px; margin-bottom: 20px; border-left: 4px solid var(--border-color); }
+        .skeleton-line { background: linear-gradient(90deg, var(--border-color) 25%, var(--bg-tertiary) 50%, var(--border-color) 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 6px; }
+        .skeleton-title { width: 40%; height: 22px; margin-bottom: 16px; }
+        .skeleton-subtitle { width: 65%; height: 16px; margin-bottom: 10px; }
+        .skeleton-text { width: 85%; height: 14px; margin-bottom: 8px; }
+        .skeleton-text-short { width: 50%; height: 14px; margin-bottom: 8px; }
+        .skeleton-img { width: 100%; max-width: 300px; height: 180px; margin: 12px 0; border-radius: 8px; }
+        .skeleton-btn { width: 140px; height: 38px; border-radius: 8px; margin-top: 12px; }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ========== ARCHIVE ========== */
+        .archive { display: none; background: var(--bg-secondary); padding: 32px; margin-bottom: 32px; border-radius: 12px; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); }
+        .archive.active { display: block; }
+        .archive h2 { font-size: 1.5em; font-weight: 600; margin-bottom: 24px; color: var(--text-tertiary); }
+        .month-selector { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding: 16px; background: var(--bg-tertiary); border-radius: 8px; gap: 16px; }
+        .month-selector button { background: var(--accent-dark); color: white; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-size: 0.875em; flex-shrink: 0; transition: all 0.2s ease; font-weight: 500; }
+        .month-selector button:hover:not(:disabled) { background: var(--accent-dark-hover); }
+        .month-selector button:disabled { opacity: 0.5; cursor: not-allowed; }
+        .month-selector h3 { margin: 0; font-size: 1.1em; font-weight: 600; text-align: center; flex: 1; color: var(--text-tertiary); }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-top: 16px; }
+        .calendar-header { text-align: center; font-weight: 600; padding: 12px 5px; color: var(--text-secondary); font-size: 0.75em; text-transform: uppercase; letter-spacing: 0.05em; }
+        .calendar-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; background: var(--bg-tertiary); border-radius: 8px; cursor: pointer; border: 2px solid transparent; font-size: 0.875em; min-height: 48px; transition: all 0.2s ease; color: var(--text-primary); font-weight: 500; }
+        .calendar-day:hover:not(.locked):not(.empty) { background: var(--border-color); transform: scale(1.05); }
+        .calendar-day.today { border-color: var(--accent-dark); background: var(--bg-secondary); font-weight: 600; }
+        .calendar-day.selected { background: var(--accent-dark); color: white; font-weight: 600; }
+        .calendar-day.locked { opacity: 0.3; cursor: not-allowed; position: relative; }
+        .calendar-day.locked::after { content: '🔒'; font-size: 0.7em; position: absolute; bottom: 2px; right: 2px; }
+        .calendar-day.empty { background: transparent; cursor: default; }
+
+        /* ========== FOOTER ========== */
+        footer { text-align: center; margin-top: 60px; padding: 24px; color: var(--text-secondary); font-size: 0.875em; font-weight: 500; }
+
+        /* ========== MOBILE ========== */
+        @media (max-width: 768px) {
+            body { padding: 20px 16px; }
+            h1 { font-size: 2em; }
+            .content-section { padding: 24px; padding-bottom: 60px; margin-bottom: 20px; }
+            .content-section h2 { font-size: 1.1em; }
+            .section-actions { bottom: 12px; right: 12px; }
+            .spotify-link { width: 100%; text-align: center; }
+            .button-group { flex-direction: column; align-items: stretch; }
+            .learn-more-link { margin-left: 0; text-align: center; }
+            .calendar-day { font-size: 0.8em; min-height: 40px; }
+            .archive { padding: 20px; }
+            .month-selector { padding: 12px; }
+            .content-image { max-width: 100%; height: 180px; }
+            .share-options { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button class="hamburger-btn" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
+        </button>
+        <h1>Daily Muse</h1>
+        <div class="date-display" id="currentDate"></div>
+    </header>
+
+    <!-- Hamburger Menu -->
+    <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+    <nav class="hamburger-menu" id="hamburgerMenu">
+        <div class="menu-header">
+            <h2>Menu</h2>
+            <button class="menu-close" onclick="closeMenu()">✕</button>
+        </div>
+        <div class="menu-items">
+            <button class="menu-item" onclick="toggleArchive(); closeMenu();"><span>Archive</span></button>
+            <button class="menu-item" onclick="showFavorites(); closeMenu();"><span>Favorites</span></button>
+            <button class="menu-item" onclick="closeMenu();"><span>Notifications</span></button>
+            <div class="menu-divider"></div>
+            <button class="menu-item" id="menuDarkModeToggle" onclick="toggleDarkMode()"><span id="menuDarkModeText">Dark Mode</span></button>
+        </div>
+    </nav>
+
+    <div class="archive" id="archive">
+        <h2>Archive</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 15px;">Select a date to view that day's selections</p>
+        <div class="month-selector">
+            <button onclick="changeMonth(-1)" id="prevMonthBtn">← Previous</button>
+            <h3 id="currentMonth"></h3>
+            <button onclick="changeMonth(1)" id="nextMonthBtn">Next →</button>
+        </div>
+        <div class="calendar-grid" id="calendarGrid"></div>
+    </div>
+
+    <main id="mainContent"></main>
+
+    <!-- Share Modal -->
+    <div class="modal-overlay" id="shareModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Share</h3>
+                <button class="modal-close" onclick="closeShareModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="share-options">
+                    <div class="share-option" onclick="shareVia('twitter')"><span>🐦</span><div>Twitter</div></div>
+                    <div class="share-option" onclick="shareVia('facebook')"><span>📘</span><div>Facebook</div></div>
+                    <div class="share-option" onclick="shareVia('email')"><span>📧</span><div>Email</div></div>
+                    <div class="share-option" onclick="shareVia('copy')"><span>📋</span><div>Copy Link</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Favorites Modal -->
+    <div class="modal-overlay" id="favoritesModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>My Favorites</h3>
+                <button class="modal-close" onclick="closeFavoritesModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="favorites-grid" id="favoritesGrid"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer><p>Your daily dose of culture</p></footer>
+
+    <script>
+        // ========================================
+        // CONFIG
+        // ========================================
+        
+        // *** CHANGE THIS to your hosted content URL ***
+        const CONTENT_BASE_URL = './content';
+        const APP_START_DATE = new Date(2026, 0, 1);
+        const CACHE_PREFIX = 'dailyMuse_content_';
+        const STORAGE_KEYS = {
+            DARK_MODE: 'dailyMuse_darkMode',
+            FAVORITES: 'dailyMuse_favorites'
+        };
+
+        // ========================================
+        // DATE UTILITIES
+        // ========================================
+        
+        function formatDateKey(date) {
+            const y = date.getFullYear();
+            const m = String(date.getMonth() + 1).padStart(2, '0');
+            const d = String(date.getDate()).padStart(2, '0');
+            return `${y}-${m}-${d}`;
+        }
+
+        function isDateUnlocked(date) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const check = new Date(date);
+            check.setHours(0, 0, 0, 0);
+            return check >= APP_START_DATE && check <= today;
+        }
+
+        // ========================================
+        // CONTENT FETCHING & CACHING
+        // ========================================
+        
+        async function fetchContent(date) {
+            const dateKey = formatDateKey(date);
+            
+            // Check local cache first
+            const cached = localStorage.getItem(CACHE_PREFIX + dateKey);
+            if (cached) {
+                try { return JSON.parse(cached); } catch(e) { /* fall through */ }
+            }
+
+            // Try Netlify Function API (reads from Blobs, generates if needed)
+            try {
+                const apiRes = await fetch(`/.netlify/functions/get-content?date=${dateKey}`);
+                if (apiRes.ok) {
+                    const data = await apiRes.json();
+                    localStorage.setItem(CACHE_PREFIX + dateKey, JSON.stringify(data));
+                    return data;
+                }
+            } catch (err) {
+                console.log(`API fetch failed for ${dateKey}, trying static file...`);
+            }
+
+            // Fall back to static JSON file
+            try {
+                const res = await fetch(`${CONTENT_BASE_URL}/${dateKey}.json`);
+                if (res.ok) {
+                    const data = await res.json();
+                    localStorage.setItem(CACHE_PREFIX + dateKey, JSON.stringify(data));
+                    return data;
+                }
+            } catch (err) {
+                console.error(`All sources failed for ${dateKey}:`, err);
+            }
+
+            return null;
+        }
+
+        // ========================================
+        // DISPLAY CONTENT
+        // ========================================
+        
+        async function displayContent(date) {
+            if (!isDateUnlocked(date)) {
+                alert("This date hasn't been unlocked yet!");
+                return;
+            }
+
+            const main = document.getElementById('mainContent');
+            main.innerHTML = `
+                <div class="skeleton-card"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-subtitle"></div><div class="skeleton-line skeleton-text"></div><div class="skeleton-line skeleton-btn"></div></div>
+                <div class="skeleton-card"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-img"></div><div class="skeleton-line skeleton-text"></div><div class="skeleton-line skeleton-text-short"></div></div>
+                <div class="skeleton-card"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-text"></div><div class="skeleton-line skeleton-text"></div><div class="skeleton-line skeleton-text-short"></div></div>
+                <div class="skeleton-card"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-img"></div><div class="skeleton-line skeleton-text"></div></div>
+                <div class="skeleton-card"><div class="skeleton-line skeleton-title"></div><div class="skeleton-line skeleton-img"></div><div class="skeleton-line skeleton-text-short"></div></div>
+                <div style="text-align:center; padding:20px; color:var(--text-secondary); font-size:14px;">Generating today's muse... this may take a moment</div>
+            `;
+
+            const content = await fetchContent(date);
+
+            if (!content) {
+                main.innerHTML = `
+                    <div class="empty-state" style="background: var(--bg-secondary); padding: 60px 20px; border-radius: 12px;">
+                        <div class="empty-state-icon">😔</div>
+                        <h3 style="margin-bottom: 12px; color: var(--text-tertiary);">Content Unavailable</h3>
+                        <p>Unable to load today's content. Please check your connection and try again.</p>
+                    </div>`;
+                return;
+            }
+
+            window._currentContent = content;
+            window._currentDate = date;
+
+            const sections = [
+                { type: 'music', title: 'Classical Music', data: content.music },
+                { type: 'painting', title: 'Visual Art', data: content.painting },
+                { type: 'poem', title: 'Poetry', data: content.poem },
+                { type: 'sculpture', title: 'Sculpture', data: content.sculpture },
+                { type: 'photography', title: 'Photography', data: content.photography },
+                { type: 'architecture', title: 'Architecture', data: content.architecture },
+                { type: 'astronomy', title: 'Astronomy', data: content.astronomy },
+                { type: 'quote', title: 'Daily Inspiration', data: content.quote }
+            ];
+
+            main.innerHTML = '';
+            sections.forEach(({ type, title, data }) => {
+                if (data) {
+                    const section = createSection(type, title, data, date);
+                    main.appendChild(section);
+                }
+            });
+            updateFavoriteButtons();
+        }
+
+        function createSection(type, title, item, date) {
+            const section = document.createElement('div');
+            section.className = 'content-section';
+            const dateStr = date.toISOString();
+            const artistName = item.artist || item.author || item.composer || item.architect || item.photographer || item.credit || '';
+            const itemTitle = item.title || item.piece || item.name || (item.text ? item.text.substring(0, 30) + '...' : '');
+
+            section.innerHTML = `
+                <h2>${title}</h2>
+                <div>${generateContent(type, item)}</div>
+                <div class="section-actions">
+                    <button class="favorite-btn" data-type="${type}" data-date="${dateStr}"
+                            onclick="toggleFavorite('${type}', new Date('${dateStr}'), '${esc(itemTitle)}', '${esc(artistName)}')">☆</button>
+                    <button class="share-btn" onclick="openShareModal('${type}', '${esc(itemTitle)}', '${esc(artistName)}')">📤</button>
+                </div>`;
+            return section;
+        }
+
+        function esc(str) { return (str || '').replace(/'/g, "\\'").replace(/"/g, '&quot;'); }
+
+        function generateContent(type, item) {
+            switch(type) {
+                case 'music':
+                    const spotifyLink = `https://open.spotify.com/search/${encodeURIComponent(item.spotifyQuery || item.piece)}`;
+                    return `
+                        <p><strong>${item.piece}</strong></p>
+                        <p>By ${item.composer} (${item.year})</p>
+                        <div class="button-group">
+                            <a href="${spotifyLink}" target="_blank" rel="noopener" class="spotify-link">Listen on Spotify</a>
+                            <a href="${item.wiki}" target="_blank" rel="noopener" class="learn-more-link">Learn more</a>
+                        </div>`;
+                case 'poem':
+                    return `
+                        <p><strong>${item.title}</strong></p>
+                        <p>By ${item.author}</p>
+                        <div class="poem-text">${item.text}</div>
+                        <div class="button-group">
+                            <a href="${item.url}" target="_blank" rel="noopener" class="spotify-link">Read Full Poem</a>
+                            <a href="${item.wiki}" target="_blank" rel="noopener" class="learn-more-link">Learn more</a>
+                        </div>`;
+                case 'painting':
+                case 'sculpture':
+                case 'photography': {
+                    const img = item.image ? `<img src="${item.image}" alt="${item.title}" class="content-image" onerror="this.classList.add('error')">` : '';
+                    const creator = item.artist || item.photographer || '';
+                    const btnText = type === 'photography' ? 'View Photo' : type === 'sculpture' ? 'View Details' : 'View at Museum';
+                    return `
+                        ${img}
+                        <p><strong>${item.title}</strong></p>
+                        <p>By ${creator} (${item.year})</p>
+                        <p style="margin-top: 12px;">${item.description}</p>
+                        <div class="button-group">
+                            <a href="${item.url}" target="_blank" rel="noopener" class="spotify-link">${btnText}</a>
+                            <a href="${item.wiki}" target="_blank" rel="noopener" class="learn-more-link">Learn more</a>
+                        </div>`;
+                }
+                case 'architecture': {
+                    const archImg = item.image ? `<img src="${item.image}" alt="${item.name}" class="content-image" onerror="this.classList.add('error')">` : '';
+                    return `
+                        ${archImg}
+                        <p><strong>${item.name}</strong></p>
+                        <p>By ${item.architect} (${item.year})</p>
+                        <p style="margin-top: 8px; color: var(--text-secondary);">${item.location}</p>
+                        <p style="margin-top: 12px;">${item.description}</p>
+                        <div class="button-group">
+                            <a href="${item.url}" target="_blank" rel="noopener" class="spotify-link">View Details</a>
+                            <a href="${item.wiki}" target="_blank" rel="noopener" class="learn-more-link">Learn more</a>
+                        </div>`;
+                }
+                case 'astronomy': {
+                    const astroImg = item.image ? `<img src="${item.image}" alt="${item.title}" class="content-image" style="max-width: 400px;" onerror="this.classList.add('error')">` : '';
+                    return `
+                        ${astroImg}
+                        <p><strong>${item.title}</strong></p>
+                        <p style="margin-top: 8px;">${item.description || ''}</p>
+                        <p style="margin-top: 8px; font-size: 0.85em; font-style: italic; color: var(--text-secondary);">Credit: ${item.credit || 'NASA APOD'}</p>
+                        <div class="button-group">
+                            <a href="https://apod.nasa.gov/apod/" target="_blank" rel="noopener" class="spotify-link">View on NASA APOD</a>
+                        </div>`;
+                }
+                case 'quote':
+                    return `
+                        <div class="poem-text">"${item.text}"</div>
+                        <p style="text-align: right; margin-top: 10px; color: var(--text-secondary); font-style: italic;">— ${item.author}</p>`;
+                default:
+                    return '<p>Content coming soon...</p>';
+            }
+        }
+
+        // ========================================
+        // MENU
+        // ========================================
+        function toggleMenu() {
+            document.getElementById('hamburgerMenu').classList.toggle('active');
+            document.getElementById('menuOverlay').classList.toggle('active');
+        }
+        function closeMenu() {
+            document.getElementById('hamburgerMenu').classList.remove('active');
+            document.getElementById('menuOverlay').classList.remove('active');
+        }
+
+        // ========================================
+        // DARK MODE
+        // ========================================
+        function initDarkMode() {
+            if (localStorage.getItem(STORAGE_KEYS.DARK_MODE) === 'true') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                const el = document.getElementById('menuDarkModeText');
+                if (el) el.textContent = 'Light Mode';
+            }
+        }
+        function toggleDarkMode() {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            const el = document.getElementById('menuDarkModeText');
+            if (el) el.textContent = isDark ? 'Dark Mode' : 'Light Mode';
+            localStorage.setItem(STORAGE_KEYS.DARK_MODE, !isDark);
+        }
+
+        // ========================================
+        // FAVORITES
+        // ========================================
+        function getFavorites() {
+            try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.FAVORITES)) || {}; } catch(e) { return {}; }
+        }
+        function saveFavorites(f) { localStorage.setItem(STORAGE_KEYS.FAVORITES, JSON.stringify(f)); }
+        function createItemId(type, date) { return `${type}-${date.toISOString().split('T')[0]}`; }
+        function isFavorite(type, date) { return !!getFavorites()[createItemId(type, date)]; }
+        function toggleFavorite(type, date, title, artist) {
+            const favs = getFavorites();
+            const id = createItemId(type, date);
+            if (favs[id]) { delete favs[id]; } else { favs[id] = { type, date: date.toISOString(), title, artist, savedAt: new Date().toISOString() }; }
+            saveFavorites(favs);
+            updateFavoriteButtons();
+        }
+        function updateFavoriteButtons() {
+            document.querySelectorAll('.favorite-btn').forEach(btn => {
+                const type = btn.dataset.type;
+                const date = new Date(btn.dataset.date);
+                if (isFavorite(type, date)) { btn.classList.add('active'); btn.textContent = '⭐'; }
+                else { btn.classList.remove('active'); btn.textContent = '☆'; }
+            });
+        }
+        function showFavorites() {
+            const favs = Object.values(getFavorites()).sort((a, b) => new Date(b.savedAt) - new Date(a.savedAt));
+            const grid = document.getElementById('favoritesGrid');
+            if (favs.length === 0) {
+                grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⭐</div><p>No favorites yet!</p><p style="margin-top:8px;font-size:0.9em;">Tap the ☆ icon on any item to save it here.</p></div>';
+            } else {
+                grid.innerHTML = favs.map(f => `
+                    <div class="favorite-item">
+                        <div class="favorite-info"><h4>${f.title}</h4><p>${f.artist} · ${f.type}</p></div>
+                        <button class="remove-favorite" onclick="removeFavorite('${createItemId(f.type, new Date(f.date))}')">Remove</button>
+                    </div>`).join('');
+            }
+            document.getElementById('favoritesModal').classList.add('active');
+        }
+        function removeFavorite(id) { const f = getFavorites(); delete f[id]; saveFavorites(f); showFavorites(); updateFavoriteButtons(); }
+        function closeFavoritesModal() { document.getElementById('favoritesModal').classList.remove('active'); }
+
+        // ========================================
+        // SHARE
+        // ========================================
+        let currentShareItem = null;
+        function openShareModal(type, title, artist) { currentShareItem = { type, title, artist }; document.getElementById('shareModal').classList.add('active'); }
+        function closeShareModal() { document.getElementById('shareModal').classList.remove('active'); currentShareItem = null; }
+        function shareVia(platform) {
+            if (!currentShareItem) return;
+            const { type, title, artist } = currentShareItem;
+            const text = `Check out today's ${type} on Daily Muse: "${title}" by ${artist}`;
+            const url = window.location.href;
+            switch(platform) {
+                case 'twitter': window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank'); break;
+                case 'facebook': window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(text)}`, '_blank'); break;
+                case 'email': window.location.href = `mailto:?subject=${encodeURIComponent('Daily Muse')}&body=${encodeURIComponent(text + '\n\n' + url)}`; break;
+                case 'copy': navigator.clipboard.writeText(text + '\n\n' + url).then(() => alert('Link copied!')); break;
+            }
+            closeShareModal();
+        }
+
+        // ========================================
+        // ARCHIVE
+        // ========================================
+        let currentArchiveMonth = new Date();
+        function toggleArchive() {
+            const archive = document.getElementById('archive');
+            archive.classList.toggle('active');
+            if (archive.classList.contains('active')) { currentArchiveMonth = new Date(2026, 0, 1); generateCalendar(); }
+        }
+        function changeMonth(dir) {
+            const next = new Date(currentArchiveMonth);
+            next.setMonth(next.getMonth() + dir);
+            if (next < new Date(2026, 0, 1)) return;
+            const today = new Date();
+            if (next.getFullYear() > today.getFullYear() || (next.getFullYear() === today.getFullYear() && next.getMonth() > today.getMonth())) return;
+            currentArchiveMonth = next;
+            generateCalendar();
+        }
+        function generateCalendar() {
+            const grid = document.getElementById('calendarGrid');
+            const monthDisplay = document.getElementById('currentMonth');
+            const prevBtn = document.getElementById('prevMonthBtn');
+            const nextBtn = document.getElementById('nextMonthBtn');
+            monthDisplay.textContent = currentArchiveMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+            prevBtn.disabled = currentArchiveMonth.getFullYear() === 2026 && currentArchiveMonth.getMonth() === 0;
+            const today = new Date();
+            nextBtn.disabled = currentArchiveMonth.getFullYear() === today.getFullYear() && currentArchiveMonth.getMonth() === today.getMonth();
+            grid.innerHTML = '';
+            ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(d => {
+                const h = document.createElement('div'); h.className = 'calendar-header'; h.textContent = d; grid.appendChild(h);
+            });
+            const firstDay = new Date(currentArchiveMonth.getFullYear(), currentArchiveMonth.getMonth(), 1);
+            const daysInMonth = new Date(currentArchiveMonth.getFullYear(), currentArchiveMonth.getMonth() + 1, 0).getDate();
+            const todayDate = new Date(); todayDate.setHours(0,0,0,0);
+            for (let i = 0; i < firstDay.getDay(); i++) {
+                const e = document.createElement('div'); e.className = 'calendar-day empty'; grid.appendChild(e);
+            }
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(currentArchiveMonth.getFullYear(), currentArchiveMonth.getMonth(), day);
+                date.setHours(0,0,0,0);
+                const el = document.createElement('div');
+                el.className = 'calendar-day';
+                el.textContent = day;
+                if (date.getTime() === todayDate.getTime()) el.classList.add('today');
+                if (!isDateUnlocked(date)) {
+                    el.classList.add('locked');
+                    el.title = 'Unlocks on ' + date.toLocaleDateString();
+                } else {
+                    el.onclick = () => {
+                        document.querySelectorAll('.calendar-day').forEach(e => e.classList.remove('selected'));
+                        el.classList.add('selected');
+                        displayContent(date);
+                        document.getElementById('currentDate').textContent = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+                        document.getElementById('archive').classList.remove('active');
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    };
+                }
+                grid.appendChild(el);
+            }
+        }
+
+        // ========================================
+        // INIT
+        // ========================================
+        document.querySelectorAll('.modal-overlay').forEach(o => {
+            o.addEventListener('click', e => { if (e.target === o) o.classList.remove('active'); });
+        });
+
+        function init() {
+            initDarkMode();
+            const today = new Date();
+            const localToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+            if (localToday < APP_START_DATE) {
+                document.getElementById('currentDate').textContent = 'Launching January 1, 2026';
+                document.getElementById('mainContent').innerHTML = `
+                    <div class="empty-state" style="background: var(--bg-secondary); padding: 60px 20px; border-radius: 12px; margin-top: 40px;">
+                        <div class="empty-state-icon">🎨</div>
+                        <h3 style="margin-bottom: 12px; color: var(--text-tertiary);">Coming Soon!</h3>
+                        <p>Daily Muse launches on January 1, 2026.</p>
+                        <p style="margin-top: 8px;">A new piece of culture will unlock each day.</p>
+                    </div>`;
+                return;
+            }
+            displayContent(localToday);
+            document.getElementById('currentDate').textContent = localToday.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        init();
+    </script>
+</body>
+</html>

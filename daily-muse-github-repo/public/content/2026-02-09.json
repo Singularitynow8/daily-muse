@@ -1,0 +1,58 @@
+{
+  "date": "2026-02-09",
+  "music": {
+    "composer": "Sergei Rachmaninoff",
+    "piece": "Piano Concerto No. 2 in C minor, Op. 18",
+    "year": "1901",
+    "spotifyQuery": "Piano Concerto No. 2 Rachmaninoff",
+    "wiki": "https://en.wikipedia.org/wiki/Piano_Concerto_No._2_(Rachmaninoff)"
+  },
+  "painting": {
+    "title": "Wanderer above the Sea of Fog",
+    "artist": "Caspar David Friedrich",
+    "year": "1818",
+    "description": "Romantic figure gazing over misty mountain landscape",
+    "url": "https://en.wikipedia.org/wiki/Wanderer_above_the_Sea_of_Fog",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Caspar_David_Friedrich_-_Wanderer_above_the_sea_of_fog.jpg/300px-Caspar_David_Friedrich_-_Wanderer_above_the_sea_of_fog.jpg",
+    "wiki": "https://en.wikipedia.org/wiki/Caspar_David_Friedrich"
+  },
+  "poem": {
+    "title": "The Lake Isle of Innisfree",
+    "author": "W.B. Yeats",
+    "text": "I will arise and go now, and go to Innisfree,\nAnd a small cabin build there, of clay and wattles made;\nNine bean-rows will I have there, a hive for the honey-bee,\nAnd live alone in the bee-loud glade.",
+    "url": "https://www.poetryfoundation.org/poems/43281/the-lake-isle-of-innisfree",
+    "wiki": "https://en.wikipedia.org/wiki/W._B._Yeats"
+  },
+  "sculpture": {
+    "title": "The Thinker",
+    "artist": "Auguste Rodin",
+    "year": "1904",
+    "description": "Iconic bronze figure deep in contemplation",
+    "url": "https://en.wikipedia.org/wiki/The_Thinker",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Mus%C3%A9e_Rodin_1.jpg/300px-Mus%C3%A9e_Rodin_1.jpg",
+    "wiki": "https://en.wikipedia.org/wiki/Auguste_Rodin"
+  },
+  "photography": {
+    "title": "Earthrise",
+    "photographer": "William Anders",
+    "year": "1968",
+    "description": "Earth rising over the lunar horizon from Apollo 8",
+    "url": "https://en.wikipedia.org/wiki/Earthrise",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/NASA-Apollo8-Dec24-Earthrise.jpg/300px-NASA-Apollo8-Dec24-Earthrise.jpg",
+    "wiki": "https://en.wikipedia.org/wiki/William_Anders"
+  },
+  "architecture": {
+    "name": "Fallingwater",
+    "architect": "Frank Lloyd Wright",
+    "year": "1939",
+    "location": "Pennsylvania, USA",
+    "description": "House cantilevered over a waterfall in the forest",
+    "url": "https://en.wikipedia.org/wiki/Fallingwater",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Fallingwater3.jpg/300px-Fallingwater3.jpg",
+    "wiki": "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright"
+  },
+  "quote": {
+    "text": "The only way to do great work is to love what you do.",
+    "author": "Steve Jobs"
+  }
+}

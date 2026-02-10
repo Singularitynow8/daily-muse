@@ -1,0 +1,8 @@
+{
+  "name": "daily-muse",
+  "version": "1.0.0",
+  "description": "Your daily dose of culture - AI-powered daily cultural content",
+  "dependencies": {
+    "@netlify/blobs": "^8.0.0"
+  }
+}
