@@ -448,6 +448,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .favorite-item:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
         .favorite-info h4 {
             font-size: 1em;
@@ -1817,9 +1822,9 @@
             grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⭐</div><p>No favorites yet!</p><p style="margin-top:8px;font-size:0.9em;">Tap the ☆ icon on any item to save it here.</p></div>';
         } else {
             grid.innerHTML = favs.map(f => `
-                <div class="favorite-item">
+                <div class="favorite-item" style="cursor: pointer;" onclick="goToFavorite('${f.type}', '${f.date}')">
                     <div class="favorite-info"><h4>${f.title}</h4><p>${f.artist} · ${f.type}</p></div>
-                    <button class="remove-favorite" onclick="removeFavorite('${createItemId(f.type, new Date(f.date))}')">Remove</button>
+                    <button class="remove-favorite" onclick="event.stopPropagation(); removeFavorite('${createItemId(f.type, new Date(f.date))}')">Remove</button>
                 </div>`).join('');
         }
         document.getElementById('favoritesModal').classList.add('active');
@@ -1835,6 +1840,27 @@
 
     function closeFavoritesModal() {
         document.getElementById('favoritesModal').classList.remove('active');
+    }
+
+    function goToFavorite(type, dateStr) {
+        closeFavoritesModal();
+        const date = new Date(dateStr);
+        loadContent(date);
+        // Wait for content to render, then scroll to the section
+        setTimeout(() => {
+            const sections = document.querySelectorAll('.content-section');
+            for (const section of sections) {
+                const btn = section.querySelector(`.favorite-btn[data-type="${type}"]`);
+                if (btn) {
+                    section.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    // Brief highlight effect
+                    section.style.transition = 'box-shadow 0.3s ease';
+                    section.style.boxShadow = '0 0 0 3px var(--accent-blue)';
+                    setTimeout(() => { section.style.boxShadow = ''; }, 1500);
+                    break;
+                }
+            }
+        }, 300);
     }
 
     // ========================================
