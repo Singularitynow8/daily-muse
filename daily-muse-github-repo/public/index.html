@@ -944,7 +944,10 @@
         }
 
         try {
-            const apiRes = await fetch(`/.netlify/functions/get-content?date=${dateKey}`);
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 3000);
+            const apiRes = await fetch(`/.netlify/functions/get-content?date=${dateKey}`, { signal: controller.signal });
+            clearTimeout(timeout);
             if (apiRes.ok) {
                 const data = await apiRes.json();
                 localStorage.setItem(CACHE_PREFIX + dateKey, JSON.stringify(data));
@@ -970,9 +973,15 @@
 
     // Fallback for preview mode
     async function fetchContentWithFallback(date) {
-        const content = await fetchContent(date);
         const key = formatDateKey(date);
-        const result = content || MOCK_CONTENT[key] || MOCK_CONTENT["2026-02-10"];
+        // Check mock content first (instant) before slow API
+        if (MOCK_CONTENT[key]) {
+            const result = MOCK_CONTENT[key];
+            result.quote = getQuoteForDate(date);
+            return result;
+        }
+        const content = await fetchContent(date);
+        const result = content || MOCK_CONTENT["2026-02-10"];
         // Always use curated quote pool
         result.quote = getQuoteForDate(date);
         return result;
