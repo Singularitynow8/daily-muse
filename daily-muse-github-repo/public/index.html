@@ -690,7 +690,7 @@
     <div class="menu-items">
         <button class="menu-item" onclick="toggleArchive(); closeMenu();"><span>Archive</span></button>
         <button class="menu-item" onclick="showFavorites(); closeMenu();"><span>Favorites</span></button>
-        <button class="menu-item" onclick="closeMenu();"><span>Notifications</span></button>
+        <button class="menu-item" onclick="showNotificationSettings(); closeMenu();"><span>Notifications</span></button>
         <div class="menu-divider"></div>
         <button class="menu-item" id="menuDarkModeToggle" onclick="toggleDarkMode()"><span id="menuDarkModeText">Dark Mode</span></button>
     </div>
@@ -761,6 +761,61 @@
 </div>
 
 <footer><p>Your daily dose of culture</p></footer>
+
+<!-- Notifications Modal -->
+<div class="modal-overlay" id="notificationsModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3>Daily Reminder</h3>
+            <button class="modal-close" onclick="closeNotificationsModal()">×</button>
+        </div>
+        <div class="modal-body">
+            <div id="notifContent">
+                <div id="notifPwaWarning" style="display:none; text-align:center; padding:20px 0;">
+                    <div style="font-size:2.5em; margin-bottom:16px;">📲</div>
+                    <p style="font-weight:600; margin-bottom:8px; color:var(--text-tertiary);">Add to Home Screen first</p>
+                    <p style="color:var(--text-secondary); font-size:0.9em; line-height:1.6;">To receive daily notifications, add Daily Muse to your home screen:<br><br>
+                    Tap the share button <span style="display:inline-block; vertical-align:middle; width:18px; height:18px;"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l0 13"/><path d="M8 7l4-4 4 4"/><path d="M6 11v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-8"/></svg></span> in Safari, then <strong>"Add to Home Screen"</strong></p>
+                </div>
+                <div id="notifUnsupported" style="display:none; text-align:center; padding:20px 0;">
+                    <div style="font-size:2.5em; margin-bottom:16px;">🔕</div>
+                    <p style="font-weight:600; margin-bottom:8px; color:var(--text-tertiary);">Notifications not supported</p>
+                    <p style="color:var(--text-secondary); font-size:0.9em;">Your browser doesn't support push notifications. Try using Safari on iOS 16.4+ or Chrome on desktop.</p>
+                </div>
+                <div id="notifDenied" style="display:none; text-align:center; padding:20px 0;">
+                    <div style="font-size:2.5em; margin-bottom:16px;">🚫</div>
+                    <p style="font-weight:600; margin-bottom:8px; color:var(--text-tertiary);">Notifications blocked</p>
+                    <p style="color:var(--text-secondary); font-size:0.9em;">You've blocked notifications for this app. To re-enable, go to your device Settings → Daily Muse → Notifications → Allow Notifications.</p>
+                </div>
+                <div id="notifSettings" style="display:none;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:16px; background:var(--bg-tertiary); border-radius:8px; margin-bottom:20px;">
+                        <div>
+                            <div style="font-weight:600; color:var(--text-tertiary);">Daily Reminder</div>
+                            <div style="font-size:0.85em; color:var(--text-secondary); margin-top:4px;">Get notified when new content is available</div>
+                        </div>
+                        <label style="position:relative; width:50px; height:28px; cursor:pointer;">
+                            <input type="checkbox" id="notifToggle" onchange="toggleNotifications()" style="opacity:0; width:0; height:0;">
+                            <span style="position:absolute; top:0; left:0; right:0; bottom:0; background:var(--border-color); border-radius:14px; transition:0.3s;"></span>
+                            <span id="notifToggleKnob" style="position:absolute; top:2px; left:2px; width:24px; height:24px; background:white; border-radius:50%; transition:0.3s; box-shadow:0 1px 3px rgba(0,0,0,0.2);"></span>
+                        </label>
+                    </div>
+                    <div id="notifTimeSection" style="display:none;">
+                        <div style="padding:16px; background:var(--bg-tertiary); border-radius:8px; margin-bottom:20px;">
+                            <div style="font-weight:600; color:var(--text-tertiary); margin-bottom:12px;">Reminder Time</div>
+                            <div style="display:flex; align-items:center; gap:12px;">
+                                <input type="time" id="notifTime" value="08:00" onchange="saveNotifTime()" style="flex:1; padding:10px 14px; border:1px solid var(--border-color); border-radius:8px; background:var(--bg-secondary); color:var(--text-primary); font-size:1em; font-family:inherit;">
+                            </div>
+                            <div style="font-size:0.8em; color:var(--text-secondary); margin-top:8px;">We'll remind you daily at this time</div>
+                        </div>
+                        <div id="notifStatus" style="text-align:center; padding:12px; background:var(--bg-tertiary); border-radius:8px;">
+                            <span style="color:var(--accent-blue);">✓</span> <span style="color:var(--text-secondary); font-size:0.9em;">Notifications enabled</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     // ========================================
@@ -1141,6 +1196,165 @@
     function closeMenu() {
         document.getElementById('hamburgerMenu').classList.remove('active');
         document.getElementById('menuOverlay').classList.remove('active');
+    }
+
+    // ========================================
+    // NOTIFICATIONS
+    // ========================================
+    const NOTIF_KEYS = {
+        ENABLED: 'dailyMuse_notifEnabled',
+        TIME: 'dailyMuse_notifTime'
+    };
+
+    function isStandalone() {
+        return window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches;
+    }
+
+    function showNotificationSettings() {
+        const modal = document.getElementById('notificationsModal');
+        modal.classList.add('active');
+
+        // Hide all states first
+        document.getElementById('notifPwaWarning').style.display = 'none';
+        document.getElementById('notifUnsupported').style.display = 'none';
+        document.getElementById('notifDenied').style.display = 'none';
+        document.getElementById('notifSettings').style.display = 'none';
+
+        // Check if running as PWA on iOS
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        if (isIOS && !isStandalone()) {
+            document.getElementById('notifPwaWarning').style.display = 'block';
+            return;
+        }
+
+        // Check if Notification API is available
+        if (!('Notification' in window)) {
+            document.getElementById('notifUnsupported').style.display = 'block';
+            return;
+        }
+
+        // Check if already denied
+        if (Notification.permission === 'denied') {
+            document.getElementById('notifDenied').style.display = 'block';
+            return;
+        }
+
+        // Show settings
+        document.getElementById('notifSettings').style.display = 'block';
+        const isEnabled = localStorage.getItem(NOTIF_KEYS.ENABLED) === 'true';
+        const savedTime = localStorage.getItem(NOTIF_KEYS.TIME) || '08:00';
+        document.getElementById('notifToggle').checked = isEnabled;
+        document.getElementById('notifTime').value = savedTime;
+        updateToggleUI(isEnabled);
+        document.getElementById('notifTimeSection').style.display = isEnabled ? 'block' : 'none';
+    }
+
+    function closeNotificationsModal() {
+        document.getElementById('notificationsModal').classList.remove('active');
+    }
+
+    function updateToggleUI(on) {
+        const track = document.getElementById('notifToggle').parentElement.querySelectorAll('span')[0];
+        const knob = document.getElementById('notifToggleKnob');
+        if (on) {
+            track.style.background = 'var(--accent-blue)';
+            knob.style.left = '24px';
+        } else {
+            track.style.background = 'var(--border-color)';
+            knob.style.left = '2px';
+        }
+    }
+
+    async function toggleNotifications() {
+        const toggle = document.getElementById('notifToggle');
+        const isOn = toggle.checked;
+
+        if (isOn) {
+            // Request permission
+            try {
+                const permission = await Notification.requestPermission();
+                if (permission === 'granted') {
+                    localStorage.setItem(NOTIF_KEYS.ENABLED, 'true');
+                    if (!localStorage.getItem(NOTIF_KEYS.TIME)) {
+                        localStorage.setItem(NOTIF_KEYS.TIME, '08:00');
+                    }
+                    updateToggleUI(true);
+                    document.getElementById('notifTimeSection').style.display = 'block';
+                    scheduleNotification();
+                    // Show confirmation
+                    new Notification('Daily Muse', {
+                        body: 'Notifications enabled! You\'ll get a daily reminder.',
+                        icon: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Ctext y=\'80\' font-size=\'80\'%3E🎨%3C/text%3E%3C/svg%3E'
+                    });
+                } else {
+                    toggle.checked = false;
+                    updateToggleUI(false);
+                    if (permission === 'denied') {
+                        document.getElementById('notifSettings').style.display = 'none';
+                        document.getElementById('notifDenied').style.display = 'block';
+                    }
+                }
+            } catch (e) {
+                toggle.checked = false;
+                updateToggleUI(false);
+            }
+        } else {
+            localStorage.setItem(NOTIF_KEYS.ENABLED, 'false');
+            updateToggleUI(false);
+            document.getElementById('notifTimeSection').style.display = 'none';
+            clearScheduledNotification();
+        }
+    }
+
+    function saveNotifTime() {
+        const time = document.getElementById('notifTime').value;
+        localStorage.setItem(NOTIF_KEYS.TIME, time);
+        scheduleNotification();
+    }
+
+    let notifTimer = null;
+    function scheduleNotification() {
+        clearScheduledNotification();
+        if (localStorage.getItem(NOTIF_KEYS.ENABLED) !== 'true') return;
+        if (Notification.permission !== 'granted') return;
+
+        const timeStr = localStorage.getItem(NOTIF_KEYS.TIME) || '08:00';
+        const [hours, minutes] = timeStr.split(':').map(Number);
+
+        function getNextAlarm() {
+            const now = new Date();
+            const alarm = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, 0);
+            if (alarm <= now) alarm.setDate(alarm.getDate() + 1);
+            return alarm;
+        }
+
+        const msUntil = getNextAlarm() - new Date();
+        notifTimer = setTimeout(() => {
+            const messages = [
+                'Your daily dose of culture awaits!',
+                'New music, art, and poetry are ready for you.',
+                'Start your day with something beautiful.',
+                'Today\'s cultural inspiration is waiting.',
+                'A new day of discovery begins!'
+            ];
+            const msg = messages[Math.floor(Math.random() * messages.length)];
+            new Notification('Daily Muse', {
+                body: msg,
+                icon: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Ctext y=\'80\' font-size=\'80\'%3E🎨%3C/text%3E%3C/svg%3E',
+                tag: 'daily-muse-reminder'
+            });
+            // Schedule next day
+            scheduleNotification();
+        }, msUntil);
+    }
+
+    function clearScheduledNotification() {
+        if (notifTimer) { clearTimeout(notifTimer); notifTimer = null; }
+    }
+
+    // Auto-schedule on load if enabled
+    if (localStorage.getItem(NOTIF_KEYS.ENABLED) === 'true' && 'Notification' in window && Notification.permission === 'granted') {
+        scheduleNotification();
     }
 
     // ========================================
