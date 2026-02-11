@@ -1842,25 +1842,22 @@
         document.getElementById('favoritesModal').classList.remove('active');
     }
 
-    function goToFavorite(type, dateStr) {
+    async function goToFavorite(type, dateStr) {
         closeFavoritesModal();
         const date = new Date(dateStr);
-        loadContent(date);
-        // Wait for content to render, then scroll to the section
-        setTimeout(() => {
-            const sections = document.querySelectorAll('.content-section');
-            for (const section of sections) {
-                const btn = section.querySelector(`.favorite-btn[data-type="${type}"]`);
-                if (btn) {
-                    section.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    // Brief highlight effect
-                    section.style.transition = 'box-shadow 0.3s ease';
-                    section.style.boxShadow = '0 0 0 3px var(--accent-blue)';
-                    setTimeout(() => { section.style.boxShadow = ''; }, 1500);
-                    break;
-                }
+        await displayContent(date);
+        // Content is now rendered, scroll to the section
+        const sections = document.querySelectorAll('.content-section');
+        for (const section of sections) {
+            const btn = section.querySelector(`.favorite-btn[data-type="${type}"]`);
+            if (btn) {
+                section.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                section.style.transition = 'box-shadow 0.3s ease';
+                section.style.boxShadow = '0 0 0 3px var(--accent-blue)';
+                setTimeout(() => { section.style.boxShadow = ''; }, 1500);
+                break;
             }
-        }, 300);
+        }
     }
 
     // ========================================
