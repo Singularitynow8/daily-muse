@@ -1304,7 +1304,9 @@
         };
 
         main.innerHTML = '';
+        // Render all categories except quote first, then quote last
         ALL_CATEGORIES.forEach(cat => {
+            if (cat.key === 'quote') return;
             if (enabledCats[cat.key] === false) return;
             const data = content[cat.key];
             if (data) {
@@ -1320,6 +1322,11 @@
                 main.appendChild(section);
             }
         });
+        // Always render quote last
+        if (enabledCats['quote'] !== false && content['quote']) {
+            const section = createSection('quote', SECTION_TITLES['quote'] || 'Daily Inspiration', content['quote'], date);
+            main.appendChild(section);
+        }
         updateFavoriteButtons();
     }
 
