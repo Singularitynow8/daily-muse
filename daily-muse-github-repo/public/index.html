@@ -302,6 +302,14 @@
         }
         .content-image.error { display: block; width: 200px; height: 150px; background: var(--bg-tertiary); border-radius: 8px; }
 
+        .img-shimmer {
+            width: 200px; height: 150px; border-radius: 8px;
+            background: linear-gradient(90deg, var(--bg-tertiary) 25%, var(--bg-secondary) 50%, var(--bg-tertiary) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
         /* ========== BUTTONS & LINKS ========== */
         .spotify-link {
             display: inline-block;
@@ -1208,6 +1216,58 @@
     }
 
     // ========================================
+    // WIKIPEDIA IMAGE FALLBACK
+    // ========================================
+    async function wikiImageFallback(imgEl) {
+        const wikiUrl = imgEl.dataset.wiki;
+        if (!wikiUrl) { imgEl.style.display = 'none'; return; }
+        
+        // Show shimmer while loading
+        imgEl.style.display = 'none';
+        const shimmer = document.createElement('div');
+        shimmer.className = 'img-shimmer';
+        imgEl.parentNode.insertBefore(shimmer, imgEl);
+        
+        try {
+            // Extract page title from wiki URL
+            const match = wikiUrl.match(/wikipedia\.org\/wiki\/(.+)/);
+            if (!match) { shimmer.remove(); return; }
+            const pageTitle = decodeURIComponent(match[1]);
+            
+            // Check localStorage cache first
+            const cacheKey = 'wikiImg_' + pageTitle;
+            const cached = localStorage.getItem(cacheKey);
+            if (cached) {
+                imgEl.src = cached;
+                imgEl.onerror = null;
+                imgEl.style.display = '';
+                shimmer.remove();
+                return;
+            }
+            
+            // Call Wikipedia API for page thumbnail
+            const apiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(pageTitle)}`;
+            const res = await fetch(apiUrl);
+            if (!res.ok) throw new Error('API failed');
+            const data = await res.json();
+            
+            const thumbUrl = data.thumbnail?.source || data.originalimage?.source;
+            if (thumbUrl) {
+                localStorage.setItem(cacheKey, thumbUrl);
+                imgEl.src = thumbUrl;
+                imgEl.onerror = null;
+                imgEl.style.display = '';
+                shimmer.remove();
+            } else {
+                shimmer.remove();
+            }
+        } catch(e) {
+            shimmer.remove();
+            console.log('Wiki image fallback failed:', e);
+        }
+    }
+
+    // ========================================
     // CONTENT FETCHING & CACHING
     // ========================================
     async function fetchContent(date) {
@@ -1378,7 +1438,7 @@
             case 'painting':
             case 'sculpture':
             case 'photography': {
-                const img = item.image ? `<img src="${item.image}" alt="${item.title}" class="content-image" onerror="this.style.display='none';var p=document.createElement('div');p.style.cssText='width:200px;height:150px;background:var(--bg-tertiary);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:2.5em;opacity:0.5';p.textContent='🖼️';this.parentNode.insertBefore(p,this)">` : '';
+                const img = item.image ? `<img src="${item.image}" alt="${item.title}" class="content-image" data-wiki="${item.wiki || ''}" onerror="wikiImageFallback(this)">` : (item.wiki ? `<img src="" class="content-image" data-wiki="${item.wiki}" onerror="wikiImageFallback(this)" style="display:none">` : '');
                 const creator = item.artist || item.photographer || '';
                 const btnText = type === 'photography' ? 'View Photo' : type === 'sculpture' ? 'View Details' : 'View at Museum';
                 return `
@@ -1392,7 +1452,7 @@
                     </div>`;
             }
             case 'architecture': {
-                const archImg = item.image ? `<img src="${item.image}" alt="${item.name}" class="content-image" onerror="this.style.display='none';var p=document.createElement('div');p.style.cssText='width:200px;height:150px;background:var(--bg-tertiary);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:2.5em;opacity:0.5';p.textContent='🖼️';this.parentNode.insertBefore(p,this)">` : '';
+                const archImg = item.image ? `<img src="${item.image}" alt="${item.name}" class="content-image" data-wiki="${item.wiki || ''}" onerror="wikiImageFallback(this)">` : (item.wiki ? `<img src="" class="content-image" data-wiki="${item.wiki}" onerror="wikiImageFallback(this)" style="display:none">` : '');
                 return `
                     ${archImg}
                     <p><strong>${item.name}</strong></p>
@@ -1405,7 +1465,7 @@
                     </div>`;
             }
             case 'astronomy': {
-                const astroImg = item.image ? `<img src="${item.image}" alt="${item.title}" class="content-image" style="max-width: 400px;" onerror="this.style.display='none';var p=document.createElement('div');p.style.cssText='width:200px;height:150px;background:var(--bg-tertiary);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:2.5em;opacity:0.5';p.textContent='🖼️';this.parentNode.insertBefore(p,this)">` : '';
+                const astroImg = item.image ? `<img src="${item.image}" alt="${item.title}" class="content-image" style="max-width: 400px;" data-wiki="${item.wiki || ''}" onerror="wikiImageFallback(this)">` : (item.wiki ? `<img src="" class="content-image" data-wiki="${item.wiki}" onerror="wikiImageFallback(this)" style="display:none">` : '');
                 return `
                     ${astroImg}
                     <p><strong>${item.title}</strong></p>
@@ -1486,7 +1546,7 @@
                         <a href="${item.wiki}" target="_blank" rel="noopener" class="spotify-link">About the author</a>
                     </div>`;
             case 'nature': {
-                const natImg = item.image ? `<img src="${item.image}" alt="${item.title}" class="content-image" style="max-width: 400px;" onerror="this.style.display='none';var p=document.createElement('div');p.style.cssText='width:200px;height:150px;background:var(--bg-tertiary);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:2.5em;opacity:0.5';p.textContent='🖼️';this.parentNode.insertBefore(p,this)">` : '';
+                const natImg = item.image ? `<img src="${item.image}" alt="${item.title}" class="content-image" style="max-width: 400px;" data-wiki="${item.wiki || ''}" onerror="wikiImageFallback(this)">` : (item.wiki ? `<img src="" class="content-image" data-wiki="${item.wiki}" onerror="wikiImageFallback(this)" style="display:none">` : '');
                 return `
                     ${natImg}
                     <p><strong>${item.title}</strong></p>
